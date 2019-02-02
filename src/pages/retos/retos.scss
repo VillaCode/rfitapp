@@ -1,0 +1,25 @@
+page-home {
+
+    ion-slides{
+        background-color: aqua;
+    }
+
+    #scrollable{
+        overflow-y: auto !important;
+    }
+    
+    .slide-zoom{
+      height:100%;
+      overflow-y: auto;
+    }
+    #red{
+        background-color: red;
+    }
+    #green{
+        background-color: green;
+    }
+    #black{
+        background-color: black;
+    }
+   
+}

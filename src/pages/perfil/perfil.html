@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="font-size:25px;"> 
+      Perfil
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card id="profile">
+    <ion-grid>
+      <ion-row >
+        <ion-col col-7>
+          <ion-card-header style="font-size:15px; font-weight: bold;">
+            {{usuario}}
+          </ion-card-header>
+          <ion-card-content>
+            <div style="font-size:15px;">{{pais}}</div>
+            <div style="font-size:15px;">{{fechaInicio}}</div>
+          </ion-card-content>
+        </ion-col>
+        <ion-col>
+          <ion-row>            
+            <ion-avatar>
+              <img style="border-radius: 50%; max-width: 100px; max-height: 100px;" src="assets/default.png">
+            </ion-avatar>
+          </ion-row>
+          <ion-row>
+            <ion-col offset-1 style="font-size:25px;">
+            {{DistanciaRecorridaTotal}} km
+            </ion-col>
+          </ion-row>  
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="settings"></ion-icon> Configuración
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Notificaciones</ion-label>
+        <ion-toggle checked="false"></ion-toggle>
+      </ion-item>
+      <ion-list>
+        <button ion-item (click)="openSettingsPage()">
+          Cuenta
+        </button>  
+      </ion-list>
+      <ion-item>
+        Cerrar sesión
+        <button ion-button outline item-end icon-start>
+          salir
+        </button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  
+  
+  <ion-card id="feedback" style="padding: 5px;">
+    <ion-title>¿Deseas ayudarnos?</ion-title>
+    <ion-card-header>
+      ¡Escríbenos tus comentarios!
+    </ion-card-header>
+    <textarea name="feedback" id="feedback" cols="47" rows="10"></textarea>
+    <button ion-button full>Enviar</button>
+  </ion-card>
+  
+ 
+
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "RFitMVP",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Cuenta
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-card-header>
+    <ion-icon name="settings"></ion-icon> Información de cuenta
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+          <ion-label stacked>Nombre</ion-label>
+          <ion-label padding> {{currentNombre}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Nombre de usuario</ion-label>
+          <ion-label padding> {{currentUsername}}</ion-label>
+      </ion-item>
+    
+      <ion-item>
+          <ion-label stacked>País de origen</ion-label>
+          <ion-label padding> {{currentPais}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Correo</ion-label>
+          <ion-label padding> {{currentCorreo}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Número telefónico</ion-label>
+          <ion-label padding> {{currentTel}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+  </ion-card-content>
+  
+      <button ion-item (click)="openChangeInfo()">
+        Cambiar información o contraseña
+      </button>  
+ 
+
+
+
+</ion-content>

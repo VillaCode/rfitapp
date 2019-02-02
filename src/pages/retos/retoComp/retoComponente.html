@@ -1,0 +1,48 @@
+<ion-card>
+        <ion-grid>
+                <ion-row>
+                    <ion-col col-4 text-center style="padding-top:25px;">
+                    <img src="assets/addidas.png">
+                    </ion-col>
+                    <ion-col >
+                        <ion-card-title>
+                        {{retoTitulo}}
+                        </ion-card-title>
+                        <p>
+                        {{retoDescripcion}}
+                        </p>
+                    </ion-col>
+                </ion-row>    
+        </ion-grid>   
+    
+
+    <ion-card-content>
+        <ion-grid no-padding>
+            <ion-row no-padding>
+                    <ion-col>
+                    <button ion-button clear small icon-start>
+                        <ion-icon name='time'></ion-icon>
+                        {{tiempoRestante}}
+                    </button>
+                    </ion-col>
+                    
+                    <ion-col text-center>
+                        <button ion-button>
+                            Inscríbete!
+                        </button>
+                    </ion-col>
+            
+                    <ion-col text-right>
+                    <button ion-button clear small icon-start>
+                        <ion-icon name='person'></ion-icon>
+                        {{usuariosInscritos}}
+                    </button>
+                    </ion-col>
+                </ion-row>
+        </ion-grid>    
+    </ion-card-content>
+
+    
+    
+</ion-card>
+    
