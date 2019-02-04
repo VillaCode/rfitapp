@@ -13,6 +13,48 @@
   </ion-item>
 
   <ion-list class="listaDeRetos">
-    <reto></reto>
+      <ion-card *ngFor="let reto of retos">
+          <ion-grid style="padding: 2px;">
+                      <ion-row>
+                          <ion-col col-4 text-center style="padding-top:2vh;">
+                          <img src={{reto.imagen}}>
+                          </ion-col>
+                          <ion-col no-padding style="padding-left:5px;" >
+                              <ion-card-title style="font-size: 18px;">
+                              {{reto.nombre}}
+                              </ion-card-title> 
+                              <p style="font-size: 14px;">
+                              {{reto.descripcion}}
+                              </p>
+                              <ion-row no-padding>
+                                      <ion-col no-padding text-center>
+                                      <button ion-button clear small icon-start>
+                                          <ion-icon name='time'></ion-icon>
+                                          {{reto.tiempo}}
+                                      </button>
+                                      </ion-col>
+                              
+                                      <ion-col no-padding text-center>
+                                      <button ion-button clear small icon-start>
+                                          <ion-icon name='person'></ion-icon>
+                                          {{reto.inscritos}}
+                                      </button>
+                                      </ion-col>
+                                  </ion-row>    
+                          </ion-col>
+                      </ion-row>
+              </ion-grid>   
+          <ion-card-content no-padding>
+              <ion-grid no-padding>
+                  <ion-row no-padding>
+                          <ion-col text-center>
+                                <button ion-button full (click)="inscribirUsuario(reto)">
+                                    Inscribirse
+                                </button>
+                          </ion-col>
+                      </ion-row>
+              </ion-grid>    
+          </ion-card-content>  
+      </ion-card>
   </ion-list>
 </ion-content>

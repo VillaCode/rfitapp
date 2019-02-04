@@ -14,7 +14,6 @@ import { PerfilTab } from '../pages/perfil/perfil';
 import { RetosTab } from '../pages/retos/retos';
 import { configuracionTab } from '../pages/Settings/configuracion';
 import { infoChangeModal } from '../pages/Settings/infoChangeModal';
-import { RetoComponente } from '../pages/retos/retoComp/retoComponente';
 import { loginModal } from "../pages/Login/login";
 import { registroPage } from '../pages/registro/registro';
 import { HttpModule } from '@angular/http';
@@ -30,7 +29,6 @@ import { HTTP } from '@ionic-native/http/ngx';
     TabsPage,
     configuracionTab,
     infoChangeModal,
-    RetoComponente,
     loginModal,
     registroPage,
     
@@ -50,7 +48,6 @@ import { HTTP } from '@ionic-native/http/ngx';
     TabsPage,
     configuracionTab,
     infoChangeModal,
-    RetoComponente,
     loginModal,
     registroPage,
     

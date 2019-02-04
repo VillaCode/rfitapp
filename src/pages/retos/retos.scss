@@ -1,3 +1,17 @@
 page-retos {
-   
+    ion-card * {
+        img{
+            max-height: 120px;
+            width: auto;
+            border-radius: 10%;
+        }
+        ion-card{
+            height: 14vh;
+            
+            ion-card-title{
+                font-size: 10px;
+            }
+        }
+        
+    }
 }

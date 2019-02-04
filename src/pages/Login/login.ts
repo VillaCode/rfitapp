@@ -6,9 +6,9 @@ import axios from 'axios';
 import { AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map'
-import querystring from 'querystring';
 import { HTTP } from '@ionic-native/http/ngx';
-import { Observable } from 'rxjs/Observable';
+import { Perfil } from '../Login/Perfil'
+
 
 
 @Component({
@@ -24,12 +24,12 @@ export class loginModal {
     correcto:any;
     passwordMal:any;
     public id: String;
+    public perfil: any;
 
     constructor(
         public navCtrlL: NavController, 
         public alertCtrl: AlertController, 
         public loadingCtrl: LoadingController,
-        private http: HTTP,
         public httpClient: Http
         
         ) {
@@ -80,6 +80,7 @@ export class loginModal {
             loader.dismiss();
             if(data.data.split('?')[0] == "exito"){
                 this.id = data.data.split('?')[1];
+                new Perfil(this.id);
                 console.log(this.id);
                 return this.loginConfirmado();
             }
@@ -108,13 +109,11 @@ export class loginModal {
         // //     .subscribe(data => {
         // //         console.log(data);
         // //     });
-
-        
-
-        
+  
      }
 
-     abrirRegistro(){
+
+    abrirRegistro(){
          this.navCtrlL.push(registroPage);
      }
 
