@@ -2,6 +2,14 @@ reto{
     img{
         max-height: 130px;
         width: auto;
+        border-radius: 10%;
+    }
+    ion-card{
+        height: auto;
+        
+        ion-card-title{
+            font-size: 10px;
+        }
     }
     
 }

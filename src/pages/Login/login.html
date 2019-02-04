@@ -1,0 +1,17 @@
+
+<ion-content padding center text-center>
+  <ion-title>
+    <img src="assets/logopng.png">
+  </ion-title>
+  <ion-list>
+    <ion-item>
+      <ion-input placeholder="Correo Electrónico" type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Contraseña" type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button full (click)="login()">Iniciar sesion</button>
+  <button ion-button full color="light" (click)="abrirRegistro()">Registrarse</button>
+</ion-content>

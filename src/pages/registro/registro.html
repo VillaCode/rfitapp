@@ -1,0 +1,32 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Registro</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list>
+        <!-- <ion-item>
+            <ion-input placeholder="Nombre completo" [(ngModel)]="nombre"></ion-input>
+        </ion-item> -->
+        <ion-item>
+            <ion-input placeholder="Correo Electrónico" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="Nombre completo" [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="Contraseña" type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="Confirmar contraseña" type="password" [(ngModel)]="cPassword"></ion-input>
+        </ion-item>
+        
+    </ion-list>
+
+    <button ion-button full (click)="registraFuncion()">Crear cuenta</button>
+
+</ion-content>

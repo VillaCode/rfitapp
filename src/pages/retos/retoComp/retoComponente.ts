@@ -19,5 +19,8 @@ export class RetoComponente {
 
   }
 
+  inscribirUsuario(){
+   console.log("hola"); 
+  }
 
 }

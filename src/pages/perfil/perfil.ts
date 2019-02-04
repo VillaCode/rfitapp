@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, } from 'ionic-angular';
+import { NavController, ViewController, } from 'ionic-angular';
 import { configuracionTab } from '../Settings/configuracion'
+import { loginModal } from '../Login/login';
 
 
 
@@ -8,7 +9,7 @@ import { configuracionTab } from '../Settings/configuracion'
   selector: 'page-perfil',
   templateUrl: 'perfil.html'
 })
-export class PerfilTab {
+export class PerfilTab{
 
   public usuario = "Jose Felipe Ibarra";
   public pais = "México.";
@@ -16,11 +17,15 @@ export class PerfilTab {
   public DistanciaRecorridaTotal:Number = 9;
 
   constructor(public navCtrl: NavController) {
-
+    
   }
 
   openSettingsPage(){
     this.navCtrl.push(configuracionTab);
+  }
+
+  cerrarSesion(){
+    document.location.href = 'index.html';
   }
 
 }

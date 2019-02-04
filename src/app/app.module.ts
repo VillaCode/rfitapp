@@ -15,6 +15,11 @@ import { RetosTab } from '../pages/retos/retos';
 import { configuracionTab } from '../pages/Settings/configuracion';
 import { infoChangeModal } from '../pages/Settings/infoChangeModal';
 import { RetoComponente } from '../pages/retos/retoComp/retoComponente';
+import { loginModal } from "../pages/Login/login";
+import { registroPage } from '../pages/registro/registro';
+import { HttpModule } from '@angular/http';
+import { HTTP } from '@ionic-native/http/ngx';
+
 
 @NgModule({
   declarations: [
@@ -25,11 +30,16 @@ import { RetoComponente } from '../pages/retos/retoComp/retoComponente';
     TabsPage,
     configuracionTab,
     infoChangeModal,
-    RetoComponente
+    RetoComponente,
+    loginModal,
+    registroPage,
+    
+    
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,13 +50,19 @@ import { RetoComponente } from '../pages/retos/retoComp/retoComponente';
     TabsPage,
     configuracionTab,
     infoChangeModal,
-    RetoComponente
+    RetoComponente,
+    loginModal,
+    registroPage,
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    NativePageTransitions
+    NativePageTransitions,
+    loginModal,
+    PerfilTab,HTTP
+    
   ]
 })
 export class AppModule {}
