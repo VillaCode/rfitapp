@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import axios from 'axios';
 import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map'
-export var perfil : any;
+
 
 
 
@@ -11,13 +11,14 @@ export var perfil : any;
     template: "login.html",
     
 })
+
+@Injectable()
 export class Perfil {
 
+    public sharedPerfil:any;
 
-    constructor(id:String) {
-
-        this.guardarPerfil(id);
-
+    constructor() {
+        
      }
 
 guardarPerfil(id:String): void{
@@ -26,8 +27,7 @@ guardarPerfil(id:String): void{
         id_usuario: id,
     }
     var json = JSON.stringify(usuario);
-    
-    console.log(json);
+ 
 
     axios({
         method: 'post',
@@ -37,8 +37,8 @@ guardarPerfil(id:String): void{
         }
     })
     .then((data) => {
-        perfil = data.data;
-        console.log(perfil);
+        this.sharedPerfil = data.data;
+        
     } )
     .catch(err => { 
         console.log("--------------------------------" + err)
@@ -51,7 +51,7 @@ guardarPerfil(id:String): void{
             method: 'post',
             url: "https://thawing-mountain-76893.herokuapp.com/profile/inscribirUsuario",
             data: {
-                id_usuario: perfil.id,
+                id_usuario: this.sharedPerfil.id,
                 reto_actual: item.id,
             }
         })
@@ -66,5 +66,10 @@ guardarPerfil(id:String): void{
             //alertaError
         });
         }
+
+
+    getData(){
+        return this.sharedPerfil;
+    }
 
 }

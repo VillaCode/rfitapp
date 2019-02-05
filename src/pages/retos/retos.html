@@ -5,12 +5,43 @@
 </ion-header>
 
 <ion-content>
-  
-  <ion-item id="retoActual">
-      <ion-label>
-        Item with Full Lines
-      </ion-label>
-  </ion-item>
+    <!-- <ion-card > 
+        <ion-grid style="padding: 2px;">
+                    <ion-row>
+                        <ion-col   col-4 text-center style="padding-top:2vh;">
+                        <img src={{retoActivo.imagen}}>
+                        </ion-col>
+                        <ion-col no-padding style="padding-left:5px;" >
+                            <ion-card-title style="font-size: 18px;">
+                            {{retoActivo.nombre}}
+                            </ion-card-title> 
+                            <p style="font-size: 14px;">
+                            {{retoActivo.descripcion}}
+                            </p>
+                            <ion-row no-padding>
+                                    <ion-col no-padding text-center>
+                                    <button ion-button clear small icon-start>
+                                        <ion-icon name='time'></ion-icon>
+                                        {{retoActivo.tiempo}} horas
+                                    </button>
+                                    </ion-col>
+                            
+                                    <ion-col no-padding text-center>
+                                    <button ion-button clear small icon-start>
+                                        <ion-icon name='person'></ion-icon>
+                                        {{retoActivo.inscritos}}
+                                    </button>
+                                    </ion-col>
+                                </ion-row>    
+                        </ion-col>
+                    </ion-row>
+            </ion-grid>   
+        <ion-card-content no-padding>
+            
+        </ion-card-content>  
+    </ion-card>
+
+
 
   <ion-list class="listaDeRetos">
       <ion-card *ngFor="let reto of retos">
@@ -30,14 +61,14 @@
                                       <ion-col no-padding text-center>
                                       <button ion-button clear small icon-start>
                                           <ion-icon name='time'></ion-icon>
-                                          {{reto.tiempo}}
+                                          {{reto.tiempo}} horas
                                       </button>
                                       </ion-col>
                               
                                       <ion-col no-padding text-center>
                                       <button ion-button clear small icon-start>
                                           <ion-icon name='person'></ion-icon>
-                                          {{reto.inscritos}}
+                                          {{reto.inscritos}} 
                                       </button>
                                       </ion-col>
                                   </ion-row>    
@@ -56,5 +87,5 @@
               </ion-grid>    
           </ion-card-content>  
       </ion-card>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
