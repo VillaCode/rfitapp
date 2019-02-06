@@ -1,7 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { retosComp } from '../retos/retosComp'
-
+// import texto from '../Login/Perfil';
 
 
 
@@ -18,10 +18,7 @@ export class RetosTab {
 
 
   constructor(public navCtrl: NavController, public retos: retosComp) {
-    
-    this.tiempo = retos.tiempo;
-    this.retoActual = retos.retoActual;
-    
+    // console.log(texto.sharedPerfil);
   }
   
 

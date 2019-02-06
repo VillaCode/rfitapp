@@ -6,6 +6,7 @@ import { RetosTab } from '../retos/retos';
 import { loginModal } from "../Login/login";
 import { NavController, ModalController } from 'ionic-angular';
 
+
 @Component({
   templateUrl: 'tabs.html'
 })
