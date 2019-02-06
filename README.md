@@ -1,2 +1,2 @@
-# R-Fit-app
-R-Fit Ionic App
+# R-Fit-app MVP
+
