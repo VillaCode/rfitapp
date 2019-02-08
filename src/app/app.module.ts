@@ -20,6 +20,7 @@ import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Perfil } from '../pages/Login/Perfil';
 import { retosComp } from '../pages/retos/retosComp'
+import { GoogleMap, GoogleMaps, GoogleMapsEvent } from '@ionic-native/google-maps';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { retosComp } from '../pages/retos/retosComp'
     retosComp,
     SplashScreen,
     Perfil, 
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NativePageTransitions,
     PerfilTab,HTTP
