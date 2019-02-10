@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ViewController, } from 'ionic-angular';
 import { configuracionTab } from '../Settings/configuracion'
 import { loginModal } from '../Login/login';
+import { AuthService } from '../Login/ServiciosLogin/auth.service';
 
 
 
@@ -16,7 +17,7 @@ export class PerfilTab{
   public fechaInicio = "Miembro desde: "+"abril de 2018"+".";
   public DistanciaRecorridaTotal:Number = 9;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public authservice:AuthService) {
     
   }
 
@@ -25,7 +26,7 @@ export class PerfilTab{
   }
 
   cerrarSesion(){
-    document.location.href = 'index.html';
+    this.authservice.logout();
   }
 
 }

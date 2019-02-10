@@ -1,5 +1,4 @@
 import { Component, Injectable } from '@angular/core';
-import { Perfil} from '../Login/Perfil'
 import axios from 'axios';
 
 

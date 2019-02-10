@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CorreTab } from '../corre/corre';
 import { PerfilTab } from '../perfil/perfil';
 import { RetosTab } from '../retos/retos';
-import { loginModal } from "../Login/login";
 import { NavController, ModalController } from 'ionic-angular';
 
 
@@ -21,9 +20,7 @@ export class TabsPage {
     
   }
 
-  openLoginPage(){
-    this.navCtrl.push(loginModal);
-  }
+
 
 
   
