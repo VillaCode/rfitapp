@@ -10,6 +10,7 @@ export class Usuario {
     public reto_actual: string;
     public reto_actual_distancia: string;
     public reto_actual_segundos: string;
+    public codigoFinalizado: string;
   
 
     //INSTANCÍA LA VARIABLE EN CASO DE SER REQUERIDA

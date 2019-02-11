@@ -83,14 +83,9 @@ export class servicioUsuario {
   
     /**
      * ELIMINAR
-     *
-     * @returns {Promise<Usuario>}
      */
-    deleteOnStorage(): Promise<Usuario> {
-      return new Promise((resolve) => {
-        this.storage.clear();
-        resolve();
-      });
+    async deleteOnStorage() {
+      return await this.storage.clear();
     }
 
     //obtener perfil con ID

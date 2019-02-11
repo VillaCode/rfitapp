@@ -23,6 +23,7 @@ import { servicioUsuario } from '../pages/Login/ServiciosLogin/Usuario.servicioU
 import { Home } from '../pages/home/home';
 import { Usuario } from '../pages/Login/ServiciosLogin/Usuario';
 import { IonicStorageModule } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { IonicStorageModule } from '@ionic/storage';
     retosComp,
     SplashScreen,
     GoogleMaps,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NativePageTransitions,
     PerfilTab,

@@ -1,12 +1,12 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Corre!
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content no-padding>
+  <div #map id="map" style="height:89%;"></div>
+  <button ion-button block outline (click)="startTracking()" *ngIf="!isTracking">
+    <ion-icon name="locate"></ion-icon>
+    Start
+  </button>
 
-<ion-content padding>
-  <p>Texto para ver el slider moviendose!</p>
-  <div #map id="map" style="height:100%"></div>
+  <button ion-button block (click)="stopTracking()" *ngIf="isTracking">
+    <ion-icon name="locate"></ion-icon>
+    Stop
+  </button>
 </ion-content>

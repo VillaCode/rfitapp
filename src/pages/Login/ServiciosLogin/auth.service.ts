@@ -27,7 +27,7 @@ export class AuthService {
    *
    * @param email the email of the user
    * @param password the password of the user
-   * @returns {Promise<any>}
+   *
    */
   async login(email: string, password: string) {
     return this.apiService.loginPost(email, password); 
@@ -36,22 +36,18 @@ export class AuthService {
   /**
    * Logout a user from the authentication process.
    *
-   * @returns {Promise<any>}
+   * 
    */
-  logout(): Promise<any> {
-    return new Promise((resolve) => {
-      this.userService.deleteOnStorage().then(() => {
-        resolve();
-        document.location.href = 'index.html';
-      });
-    });
+  async logout() {
+    await this.userService.deleteOnStorage()
+    document.location.href = 'index.html';
   }
 
 
   /**
    * Check whether a user is already logged in.
    *
-   * @returns {boolean}
+   * 
    */
   isLoggedIn() {
     if (this.user.reto_actual) {

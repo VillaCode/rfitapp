@@ -1,17 +1,21 @@
 page-retos {
-    ion-card * {
+
+    #retoActual{
+        background: -moz-repeating-linear-gradient(rgba(255, 255, 0, 0.747), rgb(107, 9, 107));
+        width: 100%;
+        
         img{
             max-height: 120px;
             width: auto;
             border-radius: 10%;
         }
-        ion-card{
-            height: 14vh;
-            
-            ion-card-title{
-                font-size: 10px;
-            }
+    }
+
+    ion-card * {
+        img{
+            max-height: 70px;
+            width: auto;
+            border-radius: 10%;
         }
-        
     }
 }

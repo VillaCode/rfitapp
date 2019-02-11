@@ -10,9 +10,8 @@ import { TabsPage } from '../tabs/tabs';
 
 
 @Component({
-    selector: "Perfil",
-    template: "login.html",
-    
+  selector: 'page-perfil',
+  template: '',
 })
 
 

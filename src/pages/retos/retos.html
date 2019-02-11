@@ -1,90 +1,89 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Retos</ion-title>
+  <ion-navbar no-padding no-margin>
+    <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin> 
+        <ion-grid style="padding: 2px;">
+            <ion-row>
+                <ion-col   col-4 text-center style="padding-top:2vh;">
+                    <img src={{retoActual.imagen}}>
+                </ion-col>
+                <ion-col no-padding style="padding-left:5px;" >
+                    <ion-card-title style="font-size: 18px;">
+                    {{retoActual.nombre}}
+                    </ion-card-title> 
+                    <p style="font-size: 14px;">
+                    {{retoActual.descripcion}}
+                    </p>
+                    <ion-row no-padding>
+                            <ion-col no-padding text-center>
+                            <button ion-button clear small icon-start>
+                                <ion-icon name='time'></ion-icon>
+                                {{retoActual.tiempo}} horas
+                            </button>
+                            </ion-col>
+                    
+                            <ion-col no-padding text-center>
+                            <button ion-button clear small icon-start>
+                                <ion-icon name='person'></ion-icon>
+                                {{retoActual.inscritos}}
+                            </button>
+                            </ion-col>
+                        </ion-row>    
+                </ion-col>
+            </ion-row>
+        </ion-grid>   
+    </ion-card>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-card *ngIf="(retoActual)" ng-cloak> 
-        <ion-grid style="padding: 2px;">
+  <ion-list class="listaDeRetos">
+    <ion-list-header no-padding style="padding-top:130px;">
+        <ion-title>Retos disponibles:</ion-title>
+    </ion-list-header>
+    <div *ngFor="let reto of retos">
+        <ion-card *ngIf="(retoActual != reto)">  
+                <ion-grid style="padding: 2px;">
                     <ion-row>
-                        <ion-col   col-4 text-center style="padding-top:2vh;">
-                        <img src={{retoActual.imagen}}>
+                        <ion-col col-4 text-center style="padding-top:2vh;">
+                        <img src={{reto.imagen}}>
                         </ion-col>
                         <ion-col no-padding style="padding-left:5px;" >
                             <ion-card-title style="font-size: 18px;">
-                            {{retoActual.nombre}}
+                            {{reto.nombre}}
                             </ion-card-title> 
                             <p style="font-size: 14px;">
-                            {{retoActual.descripcion}}
+                            {{reto.descripcion}}
                             </p>
                             <ion-row no-padding>
-                                    <ion-col no-padding text-center>
-                                    <button ion-button clear small icon-start>
-                                        <ion-icon name='time'></ion-icon>
-                                        {{retoActual.tiempo}} horas
-                                    </button>
-                                    </ion-col>
-                            
-                                    <ion-col no-padding text-center>
-                                    <button ion-button clear small icon-start>
-                                        <ion-icon name='person'></ion-icon>
-                                        {{retoActual.inscritos}}
-                                    </button>
-                                    </ion-col>
-                                </ion-row>    
+                                <ion-col no-padding text-center>
+                                <button ion-button clear small icon-start>
+                                    <ion-icon name='time'></ion-icon>
+                                    {{reto.tiempo}} horas
+                                </button>
+                                </ion-col>
+                        
+                                <ion-col no-padding text-center>
+                                <button ion-button clear small icon-start>
+                                    <ion-icon name='person'></ion-icon>
+                                    {{reto.inscritos}} 
+                                </button>
+                                </ion-col>
+                            </ion-row>    
                         </ion-col>
                     </ion-row>
-            </ion-grid>   
-    </ion-card>
-
-
-
-  <ion-list class="listaDeRetos">
-      <ion-card *ngFor="let reto of retos">
-        <ng-container *ngIf="(retoActual != reto)">    
-            <ion-grid style="padding: 2px;">
-                        <ion-row>
-                            <ion-col col-4 text-center style="padding-top:2vh;">
-                            <img src={{reto.imagen}}>
-                            </ion-col>
-                            <ion-col no-padding style="padding-left:5px;" >
-                                <ion-card-title style="font-size: 18px;">
-                                {{reto.nombre}}
-                                </ion-card-title> 
-                                <p style="font-size: 14px;">
-                                {{reto.descripcion}}
-                                </p>
-                                <ion-row no-padding>
-                                        <ion-col no-padding text-center>
-                                        <button ion-button clear small icon-start>
-                                            <ion-icon name='time'></ion-icon>
-                                            {{reto.tiempo}} horas
-                                        </button>
-                                        </ion-col>
-                                
-                                        <ion-col no-padding text-center>
-                                        <button ion-button clear small icon-start>
-                                            <ion-icon name='person'></ion-icon>
-                                            {{reto.inscritos}} 
-                                        </button>
-                                        </ion-col>
-                                    </ion-row>    
-                            </ion-col>
-                        </ion-row>
                 </ion-grid>   
             <ion-card-content no-padding>
                 <ion-grid no-padding>
                     <ion-row no-padding>
                             <ion-col text-center>
-                                    <button ion-button full (click)="inscribirUsuario(reto)">
+                                    <button style="padding:1px;" ion-button block (click)="inscribirUsuario(reto)">
                                         Inscribirse
                                     </button>
                             </ion-col>
                         </ion-row>
                 </ion-grid>    
-            </ion-card-content>
-        </ng-container>      
-      </ion-card>
+            </ion-card-content>      
+        </ion-card>
+    </div>    
   </ion-list>
 </ion-content>

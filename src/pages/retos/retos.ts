@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import axios from 'axios';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
-import { stringify } from '@angular/core/src/render3/util';
 // import texto from '../Login/Perfil';
 
 
@@ -34,7 +33,7 @@ export class RetosTab implements OnInit {
     console.log(this.perfil);
     this.activaRetoActual();
   }
-
+ 
   async generaRetos(){
 
     
@@ -77,7 +76,6 @@ export class RetosTab implements OnInit {
         })
         .then(async () => {
          console.log("CORRECTO")
-         
          this.perfil.reto_actual = item.id;
          await this.servicioUsuario.setOnStorage(this.perfil);
          let perfil = await this.servicioUsuario.getOnStorage();
