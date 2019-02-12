@@ -55,11 +55,6 @@ export class ApiService {
 
 
 
-
-
-
-
-
     //   postRequest(url: string, body: Object, auth: boolean = true): Observable<Object> {
 //     let header = null;
 

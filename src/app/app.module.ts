@@ -15,7 +15,6 @@ import { loginModal } from "../pages/Login/login";
 import { registroPage } from '../pages/registro/registro';
 import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http/ngx';
-import { retosComp } from '../pages/retos/retosComp'
 import { GoogleMap, GoogleMaps, GoogleMapsEvent } from '@ionic-native/google-maps';
 import { ApiService } from '../pages/Login/ServiciosLogin/APIservice';
 import { AuthService } from '../pages/Login/ServiciosLogin/auth.service';
@@ -62,7 +61,6 @@ import { Geolocation } from '@ionic-native/geolocation/';
   ],
   providers: [
     StatusBar,
-    retosComp,
     SplashScreen,
     GoogleMaps,
     Geolocation,

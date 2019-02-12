@@ -11,7 +11,7 @@
     <ion-grid>
       <ion-row >
         <ion-col col-7>
-          <ion-card-header style="font-size:15px; font-weight: bold;">
+          <ion-card-header  *ngIf="(perfil)" style="font-size:15px; font-weight: bold;">
             {{perfil._email}}
           </ion-card-header>
           <ion-card-content>
@@ -26,7 +26,7 @@
             </ion-avatar>
           </ion-row>
           <ion-row>
-            <ion-col offset-1 style="font-size:25px;">
+            <ion-col  *ngIf="(perfil)" offset-1 style="font-size:25px;">
             {{perfil.reto_actual_distancia}} km
             </ion-col>
           </ion-row>  

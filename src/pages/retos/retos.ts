@@ -91,17 +91,21 @@ export class RetosTab implements OnInit {
     }
 
 
-    activaRetoActual(){   
+    activaRetoActual(){
       console.log(this.perfil.reto_actual); 
-      console.log(this.retos);     
-      for(let i of this.retos){  
-        console.log(i);     
-        if(i.id == this.perfil.reto_actual){
-          console.log("encontrado retoActual:" + i.id);
-          this.retoActual = i;
-          console.log(this.retoActual);
-          break;
+      console.log(this.retos);  
+      if(this.perfil.reto_actual && this.retos){   
+        for(let i of this.retos){  
+          console.log(i);     
+          if(i.id == this.perfil.reto_actual){
+            console.log("encontrado retoActual:" + i.id);
+            this.retoActual = i;
+            console.log(this.retoActual);
+            break;
+          }
         }
+      }else{
+        console.log("error retos o perfil");
       }
     }
 

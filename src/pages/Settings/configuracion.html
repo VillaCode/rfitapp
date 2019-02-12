@@ -15,22 +15,22 @@
     <ion-list>
       <ion-item>
           <ion-label stacked>Id de usuario</ion-label>
-          <ion-label padding> {{perfil._id}}</ion-label>
+          <ion-label padding  *ngIf="(perfil)">{{perfil._id}}</ion-label>
       </ion-item>
 
       <ion-item>
           <ion-label stacked>Correo</ion-label>
-          <ion-label padding> {{perfil._email}}</ion-label>
+          <ion-label padding  *ngIf="(perfil)">{{perfil._email}}</ion-label>
       </ion-item>
     
       <ion-item>
           <ion-label stacked>Ubicación</ion-label>
-          <ion-label padding> México</ion-label>
+          <ion-label padding>México</ion-label>
       </ion-item>
 
       <ion-item>
           <ion-label stacked>Id reto actual</ion-label>
-          <ion-label padding> {{perfil.reto_actual}}</ion-label>
+          <ion-label padding  *ngIf="(perfil)">{{perfil.reto_actual}}</ion-label>
       </ion-item>
 
     </ion-list>
