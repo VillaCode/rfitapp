@@ -5,6 +5,7 @@ import { loginModal } from '../Login/login';
 import { AuthService } from '../Login/ServiciosLogin/auth.service';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
+import { ApiService } from '../Login/ServiciosLogin/APIservice';
 
 
 
@@ -15,8 +16,10 @@ import { Usuario } from '../Login/ServiciosLogin/Usuario';
 export class PerfilTab implements OnInit{
 
   public perfil:Usuario;
+  public comentario:string;
+  public distanciaKM:string;
 
-  constructor(public navCtrl: NavController, public authservice:AuthService, public servicioUsuario:servicioUsuario) {
+  constructor(public navCtrl: NavController, public authservice:AuthService, public servicioUsuario:servicioUsuario, public apiService:ApiService) {
     
   }
 
@@ -28,7 +31,18 @@ export class PerfilTab implements OnInit{
     }else{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
-    console.log(this.perfil);
+    console.log(Object.keys(this.perfil));
+    let res = await this.apiService.obtenerDistanciaMax(this.perfil._id);
+    console.log(res);
+    if(res.split('?')[0] == "exito"){
+      if(res.split('?')[1] == 'null'){
+        this.distanciaKM = '0';
+      }else{
+        this.distanciaKM = res.split('?')[1];
+      }
+    }else{
+      this.distanciaKM = "error";
+    }
   }
 
   openSettingsPage(){
@@ -37,6 +51,11 @@ export class PerfilTab implements OnInit{
 
   cerrarSesion(){
     this.authservice.logout();
+  }
+
+  enviarFeedback(){
+    console.log(this.comentario);
+    return this.apiService.postFeedback(this.comentario, this.perfil._id);
   }
 
 }

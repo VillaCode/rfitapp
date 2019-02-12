@@ -18,7 +18,7 @@ export class ApiService {
     }
 
 
-        //AGARRA USUARIO DE ALMACENAMIENTO
+    //AGARRA USUARIO DE ALMACENAMIENTO
     private getAuthUser() {
         let user = this.userService.getOnStorage();
         if(user){
@@ -49,56 +49,53 @@ export class ApiService {
                 console.log("--------------------------------" + err)
                 return "errorservidor"
             });
-        }    
+    }
+
+
+    async postFeedback(comentario:string, id:string){
+        let feedback = {
+            id_usuario: id,
+            comentario: comentario,
+        }
+        var json = JSON.stringify(feedback);
+    
+        return axios({
+            
+            method: 'post',
+            url: "https://thawing-mountain-76893.herokuapp.com/comentario",
+            data: {
+                json
+            }
+        })
+        .then(async (data) => {return console.log(data.data);})
+                .catch((err: any) => { 
+                    console.log("--------------------------------" + err)
+                    return "errorservidor"
+                });
+    }
+
+    async obtenerDistanciaMax(id:string){
+        let feedback = {
+            id_usuario: id,
+        }
+
+        var json = JSON.stringify(feedback);
+    
+        return axios({
+            
+            method: 'post',
+            url: "https://thawing-mountain-76893.herokuapp.com/distanciaTotal",
+            data: {
+                json
+            }
+        })
+        .then(async (data) => {return data.data;})
+                .catch((err: any) => { 
+                    console.log("--------------------------------" + err)
+                    return "errorservidor"
+                });
+    }
+    
 }
 
-
-
-
-    //   postRequest(url: string, body: Object, auth: boolean = true): Observable<Object> {
-//     let header = null;
-
-//     if (auth) {
-//       header = ApiService.formatHeader();
-//     }
-//     return this.http.post(this.baseUrl + url, body, header)
-//       .map(ApiService.handleBody)
-//       .catch(ApiService.handleError);
-//   }
-
-  /**
-   * Perform a GET request.
-   *
-//    * @param url
-//    * @param auth
-//    * @returns {Promise<>}
-//    */
-//   getRequest(url: string, auth: boolean = true): Observable<Object> {
-//     let header = null
-
-//     if(auth) {
-//       header = ApiService.formatHeader();
-//     }
-
-//     return this.http.get(this.BASE_URL + url, header)
-//       .map(ApiService.handleBody)
-//       .catch(ApiService.handleError);
-//   }
-
-// //   /**
-//    * Perform a DELETE request.
-//    *
-//    * @param url
-//    * @param auth
-//    * @returns {Observable<>}
-//    */
-//   deleteRequest(url: string, auth: boolean = true): Observable<Object> {
-//     let header = null;
-
-//     if (auth) {
-//       header = ApiService.formatHeader();
-//     }
-//     return this.http.delete(this.BASE_URL + url, header)
-//       .map(ApiService.handleBody)
-//       .catch(ApiService.handleError);
 

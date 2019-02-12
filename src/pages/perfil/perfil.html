@@ -27,7 +27,7 @@
           </ion-row>
           <ion-row>
             <ion-col  *ngIf="(perfil)" offset-1 style="font-size:25px;">
-            {{perfil.reto_actual_distancia}} km
+            {{distanciaKM}} km
             </ion-col>
           </ion-row>  
         </ion-col>
@@ -64,8 +64,8 @@
     <ion-card-header>
       ¡Escríbenos tus comentarios!
     </ion-card-header>
-    <textarea name="feedback" id="feedback" cols="47" rows="7"></textarea>
-    <button ion-button full>Enviar</button>
+    <textarea name="feedback" id="feedback" cols="47" rows="7" [(ngModel)]="comentario"></textarea>
+    <button ion-button full (click)="enviarFeedback()">Enviar</button>
   </ion-card>
   
  
