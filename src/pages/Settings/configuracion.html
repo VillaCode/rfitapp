@@ -14,23 +14,23 @@
   <ion-card-content>
     <ion-list>
       <ion-item>
-          <ion-label stacked>Nombre</ion-label>
-          <ion-label padding> {{currentNombre}}</ion-label>
-      </ion-item>
-
-      <ion-item>
-          <ion-label stacked>Nombre de usuario</ion-label>
-          <ion-label padding> {{currentUsername}}</ion-label>
-      </ion-item>
-    
-      <ion-item>
-          <ion-label stacked>País de origen</ion-label>
-          <ion-label padding> {{currentPais}}</ion-label>
+          <ion-label stacked>Id de usuario</ion-label>
+          <ion-label padding> {{perfil._id}}</ion-label>
       </ion-item>
 
       <ion-item>
           <ion-label stacked>Correo</ion-label>
-          <ion-label padding> {{currentCorreo}}</ion-label>
+          <ion-label padding> {{perfil._email}}</ion-label>
+      </ion-item>
+    
+      <ion-item>
+          <ion-label stacked>Ubicación</ion-label>
+          <ion-label padding> México</ion-label>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Id reto actual</ion-label>
+          <ion-label padding> {{perfil.reto_actual}}</ion-label>
       </ion-item>
 
     </ion-list>

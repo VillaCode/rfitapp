@@ -1,22 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { infoChangeModal } from '../Settings/infoChangeModal'
+import { AuthService } from '../Login/ServiciosLogin/auth.service';
+import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
+import { Usuario } from '../Login/ServiciosLogin/Usuario';
 
 @Component({
   selector: 'page-config',
   templateUrl: 'configuracion.html'
 })
-export class configuracionTab {
+export class configuracionTab implements OnInit{
 
-  public currentNombre = "Jose Felipe Ibarra";
-  public currentUsername = "Jose123";
-  public currentPassword = "12345";
-  public currentPais = "Mexico";
-  public currentCorreo = "josefelo@gmail.com";
-  public currentTel = "+52 6672027476";
+  public perfil: Usuario;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public authservice:AuthService, public servicioUsuario:servicioUsuario) {
 
+  }
+
+  async ngOnInit() {
+    
+    let perfil = await this.servicioUsuario.getOnStorage();
+    if(!perfil._email){  
+      this.perfil = JSON.parse(perfil);
+    }else{
+      this.perfil = Usuario.ParseFromObjectStoraged(perfil);
+    }
   }
 
   openChangeInfo(){

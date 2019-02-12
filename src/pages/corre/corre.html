@@ -1,12 +1,12 @@
 <ion-content no-padding>
-  <div #map id="map" style="height:89%;"></div>
-  <button ion-button block outline (click)="startTracking()" *ngIf="!isTracking">
+  <div #map id="map" style="height:92%;"></div>
+  <button ion-button block no-padding (click)="startTracking()" *ngIf="!isTracking" style="height: 8%">
     <ion-icon name="locate"></ion-icon>
-    Start
+    Empezar
   </button>
 
-  <button ion-button block (click)="stopTracking()" *ngIf="isTracking">
+  <button ion-button block no-padding color="secondary" (click)="stopTracking()" *ngIf="isTracking" style="height: 8%">
     <ion-icon name="locate"></ion-icon>
-    Stop
+    Terminar
   </button>
 </ion-content>

@@ -12,11 +12,11 @@
       <ion-row >
         <ion-col col-7>
           <ion-card-header style="font-size:15px; font-weight: bold;">
-            {{usuario}}
+            {{perfil._email}}
           </ion-card-header>
           <ion-card-content>
-            <div style="font-size:15px;">{{pais}}</div>
-            <div style="font-size:15px;">{{fechaInicio}}</div>
+            <div style="font-size:15px;">México</div>
+            <div style="font-size:15px;">Miembro de versión alfa R-Fit.</div>
           </ion-card-content>
         </ion-col>
         <ion-col>
@@ -27,7 +27,7 @@
           </ion-row>
           <ion-row>
             <ion-col offset-1 style="font-size:25px;">
-            {{DistanciaRecorridaTotal}} km
+            {{perfil.reto_actual_distancia}} km
             </ion-col>
           </ion-row>  
         </ion-col>
@@ -64,7 +64,7 @@
     <ion-card-header>
       ¡Escríbenos tus comentarios!
     </ion-card-header>
-    <textarea name="feedback" id="feedback" cols="47" rows="10"></textarea>
+    <textarea name="feedback" id="feedback" cols="47" rows="7"></textarea>
     <button ion-button full>Enviar</button>
   </ion-card>
   
