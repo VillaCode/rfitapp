@@ -32,6 +32,9 @@ export class PerfilTab implements OnInit{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
     console.log(Object.keys(this.perfil));
+    
+    
+    
     let res = await this.apiService.obtenerDistanciaMax(this.perfil._id);
     console.log(res);
     if(res.split('?')[0] == "exito"){
@@ -43,6 +46,7 @@ export class PerfilTab implements OnInit{
     }else{
       this.distanciaKM = "error";
     }
+
   }
 
   openSettingsPage(){

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, Environment, ILatLng } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import axios from 'axios';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
+import { Observable } from "rxjs/Rx";
 
 
 interface OnInit {
@@ -16,6 +17,8 @@ let  startTime, endTime;
 const options = {
   enableHighAccuracy: true, timeout: 30000,
 };
+
+
 //NO CRASHEES PLS
 @Component({
   selector: 'page-corre',
@@ -37,6 +40,7 @@ export class CorreTab implements OnInit {
     public geolocation: Geolocation, 
     public servicioUsuario:servicioUsuario,
     public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
 
     ) 
     {
@@ -44,6 +48,7 @@ export class CorreTab implements OnInit {
     };
 
   async ngOnInit() {
+    
     this.loadMap();
     let perfil = await this.servicioUsuario.getOnStorage();
     if(!perfil._email){  
@@ -52,6 +57,8 @@ export class CorreTab implements OnInit {
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
     console.log(this.perfil);
+    
+    
   }
 
 
@@ -60,8 +67,8 @@ export class CorreTab implements OnInit {
 
 
 
-
-
+//CARGA EL MAPA
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   loadMap() {
 
@@ -102,6 +109,8 @@ export class CorreTab implements OnInit {
 
 
 
+//COMIENZA A HACER TRACKING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   startTracking() {
     startTime = new Date();
@@ -131,10 +140,12 @@ export class CorreTab implements OnInit {
 
 
 
-
-
+//DETIENE TRACKING. SUBE Y GUARDA STATS.
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async stopTracking() {
+    const loader = this.loadingCtrl.create();
     if(this.isTracking){
+    loader.present();
     this.isTracking = false;
     let distanciaTotal = 0;
     endTime = new Date();
@@ -169,16 +180,24 @@ export class CorreTab implements OnInit {
         if(data.data.split('?')[0] == "finalizado"){
           this.perfil.codigoFinalizado = data.data.split('?')[1];
           await this.servicioUsuario.setOnStorage(this.perfil);
-          this.alertaFinalizado();
+          loader.dismiss();
+          return this.alertaFinalizado();
         }
-
-        //IF corrio
-        //IF error
-      
+        else if(data.data.split('?')[0] == "corrio"){
+          this.perfil.reto_actual_distancia += distanciaTotal;
+          this.perfil.reto_actual_segundos += seconds;
+          await this.servicioUsuario.setOnStorage(this.perfil);
+          loader.dismiss();
+          return this.alertaCorrio(distanciaTotal, seconds);  
+        }
       })
-      .catch(err => console.log("--------------------------------\n" + err + "\n-----------------"));
+      .catch(err => {
+        loader.dismiss();
+        console.log("--------------------------------\n" + err + "\n-----------------");
+        return this.alertaServidor();
+        });
+      }
     }
-  }
 
 
 
@@ -190,6 +209,14 @@ export class CorreTab implements OnInit {
 
 
 
+
+
+
+
+
+    //Utilidades
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   storePosition(position) {
     if (position.coords.accuracy < 80) {
       let latlng: ILatLng;
@@ -211,12 +238,6 @@ export class CorreTab implements OnInit {
     }
     console.log(position.coords.accuracy);
   }
-
-
-
-
-
-
 
 
   deg2rad(deg) {
@@ -250,6 +271,36 @@ export class CorreTab implements OnInit {
         }]
       });
       alertFin.present();
- }
+  }
+
+  alertaCorrio(distanciaTotal:number, seconds: number){
+    const alertCor = this.alertCtrl.create({
+        title: 'Buen trabajo.',
+        subTitle: 'Las estadísticas de tu reto han sido actualizadas. <br/> ' + "Distancia recorrida: " + distanciaTotal/1000 + ' km<br/>' + "Tiempo transcurrido: " + Math.round((seconds/3600)* 100) / 100 + ' horas',
+        buttons: [{
+          text: 'De acuerdo',
+          role: 'De acuerdo',
+          handler: () => {
+            document.location.href = 'index.html';
+          } 
+        }]
+      });
+      alertCor.present();
+  }
+
+  alertaServidor(){
+    const alertError = this.alertCtrl.create({
+        title: 'Error de servidor',
+        subTitle: 'Lo sentimos, en este momento nuestros servidores estan teniendo problemas',
+        buttons: [{
+          text: 'De acuerdo',
+          role: 'De acuerdo',
+          handler: () => {
+            document.location.href = 'index.html';
+          }
+        }]
+      });
+      alertError.present();
+  }
 
 }

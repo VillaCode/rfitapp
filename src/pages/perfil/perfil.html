@@ -12,10 +12,10 @@
       <ion-row >
         <ion-col col-7>
           <ion-card-header  *ngIf="(perfil)" style="font-size:15px; font-weight: bold;">
-            {{perfil._email}}
+            {{perfil.usuario}}
           </ion-card-header>
           <ion-card-content>
-            <div style="font-size:15px;">México</div>
+            <div *ngIf="(perfil)" style="font-size:15px;">{{perfil._email}}</div>
             <div style="font-size:15px;">Miembro de versión alfa R-Fit.</div>
           </ion-card-content>
         </ion-col>
@@ -26,7 +26,7 @@
             </ion-avatar>
           </ion-row>
           <ion-row>
-            <ion-col  *ngIf="(perfil)" offset-1 style="font-size:25px;">
+            <ion-col ng-cloak *ngIf="(perfil)" offset-1 style="font-size:25px;">
             {{distanciaKM}} km
             </ion-col>
           </ion-row>  

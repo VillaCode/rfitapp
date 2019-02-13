@@ -42,7 +42,7 @@ export class loginModal {
      async login(){
 
         const loader = this.loadingCtrl.create({
-            content: "Por favor espere...",
+            content: "Iniciando sesión...",
         });
  
         if(this.email == null || this.password == null){

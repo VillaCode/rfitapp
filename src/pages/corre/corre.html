@@ -1,11 +1,11 @@
 <ion-content no-padding>
   <div #map id="map" style="height:92%;"></div>
-  <button ion-button full (click)="startTracking()" *ngIf="!isTracking" style="height: 7%">
+  <button ion-button full (click)="startTracking()" *ngIf="!isTracking" style="height: 7%; padding: 2px">
     <ion-icon name="locate"></ion-icon>
     Empezar
   </button>
 
-  <button ion-button full color="secondary" (click)="stopTracking()" *ngIf="isTracking" style="height: 7%">
+  <button ion-button full color="secondary" (click)="stopTracking()" *ngIf="isTracking" style="height: 7%; padding: 2px">
     <ion-icon name="locate"></ion-icon>
     Terminar
   </button>

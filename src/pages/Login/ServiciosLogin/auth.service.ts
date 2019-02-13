@@ -40,7 +40,7 @@ export class AuthService {
    */
   async logout() {
     await this.userService.deleteOnStorage()
-    document.location.href = 'index.html';
+    return document.location.href = 'index.html';
   }
 
 
