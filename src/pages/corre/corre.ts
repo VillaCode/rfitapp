@@ -113,24 +113,28 @@ export class CorreTab implements OnInit {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   startTracking() {
-    startTime = new Date();
-    this.isTracking = true;
-    this.geolocation.getCurrentPosition(options).then((resp) => {
-      //console.log(resp);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-    window.setInterval(() => {
-      if (!this.isTracking) {
-        return
-      }
+    if(this.perfil.reto_actual){
+      startTime = new Date();
+      this.isTracking = true;
       this.geolocation.getCurrentPosition(options).then((resp) => {
-        this.storePosition(resp);
-        console.log(resp.coords.accuracy);
+        //console.log(resp);
       }).catch((error) => {
         console.log('Error getting location', error);
       });
-    }, 5000);
+      window.setInterval(() => {
+        if (!this.isTracking) {
+          return
+        }
+        this.geolocation.getCurrentPosition(options).then((resp) => {
+          this.storePosition(resp);
+          console.log(resp.coords.accuracy);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }, 5000);
+    }else{
+      this.alertaNoReto();
+    }
   }
 
 
@@ -177,18 +181,21 @@ export class CorreTab implements OnInit {
     })
       .then(async (data) => {
         this.pathLocal = [];
+        console.log(data.data);
         if(data.data.split('?')[0] == "finalizado"){
           this.perfil.codigoFinalizado = data.data.split('?')[1];
           await this.servicioUsuario.setOnStorage(this.perfil);
           loader.dismiss();
           return this.alertaFinalizado();
         }
-        else if(data.data.split('?')[0] == "corrio"){
+        else if(data.data == "corrio"){
           this.perfil.reto_actual_distancia += distanciaTotal;
           this.perfil.reto_actual_segundos += seconds;
           await this.servicioUsuario.setOnStorage(this.perfil);
           loader.dismiss();
           return this.alertaCorrio(distanciaTotal, seconds);  
+        }else{
+          console.log("hola");
         }
       })
       .catch(err => {
@@ -218,7 +225,7 @@ export class CorreTab implements OnInit {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   storePosition(position) {
-    if (position.coords.accuracy < 80) {
+    if (position.coords.accuracy < 35) {
       let latlng: ILatLng;
       latlng = {
         lat: position.coords.latitude,
@@ -228,6 +235,7 @@ export class CorreTab implements OnInit {
       if (this.pathLocal.length > 1) {
         let polylineOptions = {
           points: this.pathLocal,
+          color: '#7c16b8',
         }
         this.map.addPolyline(polylineOptions).then((polyline) => {
           console.log("---------SE AÑADIO UN PUNTO---------");
@@ -298,6 +306,17 @@ export class CorreTab implements OnInit {
           handler: () => {
             document.location.href = 'index.html';
           }
+        }]
+      });
+      alertError.present();
+  }
+
+  alertaNoReto(){
+    const alertError = this.alertCtrl.create({
+        title: 'No estas inscrito a ningún reto',
+        subTitle: 'Para poder empezar a correr, es necesario que estes inscrito a un reto.',
+        buttons: [{
+          text: 'De acuerdo',
         }]
       });
       alertError.present();
