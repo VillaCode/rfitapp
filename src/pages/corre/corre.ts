@@ -282,9 +282,10 @@ export class CorreTab implements OnInit {
   }
 
   alertaCorrio(distanciaTotal:number, seconds: number){
+
     const alertCor = this.alertCtrl.create({
         title: 'Buen trabajo.',
-        subTitle: 'Las estadísticas de tu reto han sido actualizadas. <br/> ' + "Distancia recorrida: " + distanciaTotal/1000 + ' km<br/>' + "Tiempo transcurrido: " + Math.round((seconds/3600)* 100) / 100 + ' horas',
+        subTitle: 'Las estadísticas de tu reto han sido actualizadas. <br/> ' + "Distancia recorrida: " + Math.round(distanciaTotal * 1000) / 1000 + ' km<br/>' + "Tiempo transcurrido: " + Math.round((seconds/3600)* 100) / 100 + ' horas',
         buttons: [{
           text: 'De acuerdo',
           role: 'De acuerdo',

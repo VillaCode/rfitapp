@@ -17,7 +17,7 @@ export class PerfilTab implements OnInit{
 
   public perfil:Usuario;
   public comentario:string;
-  public distanciaKM:string;
+  public distanciaKM: any;
 
   constructor(public navCtrl: NavController, public authservice:AuthService, public servicioUsuario:servicioUsuario, public apiService:ApiService) {
     
@@ -39,9 +39,9 @@ export class PerfilTab implements OnInit{
     console.log(res);
     if(res.split('?')[0] == "exito"){
       if(res.split('?')[1] == 'null'){
-        this.distanciaKM = '0';
+        this.distanciaKM = 0;
       }else{
-        this.distanciaKM = res.split('?')[1];
+        this.distanciaKM = Math.round(parseFloat(res.split('?')[1]) * 1000) / 1000;
       }
     }else{
       this.distanciaKM = "error";
