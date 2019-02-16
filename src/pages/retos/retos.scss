@@ -2,13 +2,25 @@ page-retos {
 
     #retoActual{
         width: 100%;
-        
+        height: 28vh;
         img{
-            max-height: 120px;
+            max-height: 100px;
             width: auto;
             border-radius: 10%;
         }
     }
+
+    ion-grid {
+        height: 77%;
+        
+        #inicialRow{
+            height: auto;
+        }
+
+        ion-row {
+          height: 50%;
+        }
+      }
 
     ion-card * {
         img{

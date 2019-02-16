@@ -1,43 +1,37 @@
-<ion-header>
-  <ion-navbar no-padding no-margin>
-    <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin> 
-        <ion-grid style="padding: 2px;">
-            <ion-row>
-                <ion-col   col-4 text-center style="padding-top:2vh;">
-                    <img src={{retoActual.imagen}}>
-                </ion-col>
-                <ion-col no-padding style="padding-left:5px;" >
-                    <ion-card-title style="font-size: 18px;">
-                    {{retoActual.nombre}}
-                    </ion-card-title> 
-                    <p style="font-size: 14px;">
-                    {{retoActual.descripcion}}
-                    </p>
-                    <ion-row no-padding>
-                            <ion-col no-padding text-center>
-                            <button ion-button clear small icon-start>
-                                <ion-icon name='time'></ion-icon>
-                                {{retoActual.tiempo}} horas
-                            </button>
-                            </ion-col>
-                    
-                            <ion-col no-padding text-center>
-                            <button ion-button clear small icon-start>
-                                <ion-icon name='person'></ion-icon>
-                                {{retoActual.inscritos}}
-                            </button>
-                            </ion-col>
-                        </ion-row>    
-                </ion-col>
-            </ion-row>
-        </ion-grid>   
-    </ion-card>
-  </ion-navbar>
-</ion-header>
+<ion-content>
 
-<ion-content style="padding-top:103px;">
+    <ion-toolbar no-padding no-margin>
+        <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin style="margin-bottom: 4px;"> 
+            <ion-title style="padding:7px; padding-bottom: 2px;">Reto actual: </ion-title>
+            <hr style="background-color: rgba(0, 0, 0, 0.3);"> 
+            <ion-grid style="padding: 2px; margin-top: 5px;">
+                <ion-row>
+                    <ion-col>
+                        <div style="padding-left: 5vw;">
+                            <img src={{retoActual.imagen}}>
+                        </div>
+                        <div style="margin-left: 4vw;">
+                            <ion-card-title style="font-size: 18px;padding: 4px 0;">
+                                {{retoActual.nombre}}
+                            </ion-card-title> 
+                            <p style="font-size: 14px; line-height: 1;">
+                                {{retoActual.descripcion}}
+                            </p>
+                        </div>
+                    </ion-col>
+                    <ion-col no-padding style="padding-left:5px;" >
+                        <div style="text-align: center; margin-top: 10vh;">
+                            HOLA
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>   
+        </ion-card>
+    </ion-toolbar>
+
+
   <ion-list class="listaDeRetos">
-    <ion-list-header no-padding>
+    <ion-list-header no-padding no-margin>
         <ion-title>Retos disponibles:</ion-title>
     </ion-list-header>
     <div *ngFor="let reto of retos">

@@ -59,12 +59,12 @@
   </ion-card>
   
   
-  <ion-card id="feedback" style="padding: 5px;">
+  <ion-card id="feedback" style="padding: 5px;text-align: center;">
     <ion-title>¿Deseas ayudarnos?</ion-title>
     <ion-card-header>
       ¡Escríbenos tus comentarios!
     </ion-card-header>
-    <textarea name="feedback" id="feedback" cols="47" rows="6" [(ngModel)]="comentario"></textarea>
+    <textarea name="feedback" id="feedback" [(ngModel)]="comentario"></textarea>
     <button ion-button full (click)="enviarFeedback()">Enviar</button>
   </ion-card>
   
