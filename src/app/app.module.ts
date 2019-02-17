@@ -23,6 +23,7 @@ import { Home } from '../pages/home/home';
 import { Usuario } from '../pages/Login/ServiciosLogin/Usuario';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/';
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { Geolocation } from '@ionic-native/geolocation/';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    RoundProgressModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

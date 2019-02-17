@@ -1,9 +1,9 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import axios from 'axios';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
-// import texto from '../Login/Perfil';
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
 
 
@@ -14,26 +14,69 @@ import { Usuario } from '../Login/ServiciosLogin/Usuario';
 
 export class RetosTab implements OnInit {
 
-  public retos: any;
-  public retoActual;
+  public retosActivos: any[];
+  public retoActual: any;
   public perfil:Usuario;
-
-  constructor(public navCtrl: NavController, public servicioUsuario:servicioUsuario) {
+  public retos: any;
+  public completo: boolean;
+  public distanciaActual: number;
+  public distanciaTotalReto: number;
+  public caducidad: string;
+  
+  constructor(
+    public navCtrl: NavController, 
+    public servicioUsuario:servicioUsuario,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
+    ) 
+    {
     console.log('Constructor retosTab inicializado');
   }
 
+
+  //PRIMERA ACCION DE PAGINA TABS
   async ngOnInit() {
+
+    //Carga retos
     await this.generaRetos();
+
+    //Toma perfil de storage
     let perfil = await this.servicioUsuario.getOnStorage();
+
+    //Parse info de storage a objeto Usuario
     if(!perfil._email){  
       this.perfil = JSON.parse(perfil);
     }else{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
+
+    //Muestra boton si ya terminó el reto
+    if(this.perfil.codigoFinalizado){
+      this.completo = true;
+    }
+
     console.log(this.perfil);
+
+    //Busca y activa las variables del reto actual
     this.activaRetoActual();
   }
  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////CARGA RETOS NO CADUCOS
+  
   async generaRetos(){
 
     
@@ -44,14 +87,20 @@ export class RetosTab implements OnInit {
 
     })
     .then(async (data) => {
-
-      console.log('se arma');
       this.retos = data.data;
-      for(let i of this.retos){
-        i.tiempo = Math.round((i.tiempo/3600) * 100) / 100
+      this.retosActivos = [];
+      console.log(data.data);
+      for(let i of data.data){
+        i.tiempo = Math.round((i.tiempo/3600) * 100) / 100;
+        i.distancia = Math.round(i.distancia/1000 * 100) / 100;
+        if(!this.expirado(i.caducidad)){
+          this.retosActivos.push(i);
+        }else{
+          console.log(i.nombre + "experiado");
+        }
       }
-      
       console.log(this.retos);
+      console.log(this.retosActivos);
 
     } )
     .catch(err => { 
@@ -59,12 +108,25 @@ export class RetosTab implements OnInit {
     });
     }
 
+
+
+
+
+
+
+
+
+    
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////INSCRIBE UN USUARIO EN NUEVO RETO, ACTUALIZA SERVIDOR, STORAGE Y REINICIA APP
+
     async inscribirUsuario(item:any){
+      const loader = this.loadingCtrl.create();
+      loader.present();
       let retoError = this.retoActual;
-      this.retoActual = item;
       let usuario = {
         id_usuario: this.perfil._id,
-        id_reto: this.retoActual.id,
+        id_reto: item.id,
     }
     var json = JSON.stringify(usuario);
         return axios({
@@ -75,20 +137,41 @@ export class RetosTab implements OnInit {
             }
         })
         .then(async () => {
-         console.log("CORRECTO")
+         console.log("CORRECTO");
          this.perfil.reto_actual = item.id;
+         this.perfil.codigoFinalizado = undefined;
+         this.completo = false;
          await this.servicioUsuario.setOnStorage(this.perfil);
          let perfil = await this.servicioUsuario.getOnStorage();
          console.log(perfil);
          this.perfil = Usuario.ParseFromObjectStoraged(perfil);
          console.log(this.perfil);
-         
+         this.retoActual = item;
+         loader.dismiss();
+         document.location.href = 'index.html';
         } )
-        .catch(err => { 
+        .catch(err => {
+            loader.dismiss(); 
             console.log("--------------------------------" + err)
             this.retoActual = retoError;
+            this.alertaServidor();
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////BUSCA Y ACTIVA LAS DISTANCIAS Y OBJETIVOS DEL RETO ACTUAL
 
 
     activaRetoActual(){
@@ -96,11 +179,22 @@ export class RetosTab implements OnInit {
       console.log(this.retos);  
       if(this.perfil.reto_actual && this.retos){   
         for(let i of this.retos){  
-          console.log(i);     
           if(i.id == this.perfil.reto_actual){
+            
             console.log("encontrado retoActual:" + i.id);
             this.retoActual = i;
             console.log(this.retoActual);
+            this.retoActual.caducidad = this.retoActual.caducidad.split('T')[0];
+            this.distanciaActual = parseFloat(this.perfil.reto_actual_distancia);
+            this.distanciaTotalReto = parseFloat(this.retoActual.distancia);
+            console.log(this.retoActual.caducidad);
+            console.log(this.distanciaActual);
+            console.log(this.distanciaTotalReto);
+            if(this.expirado(this.retoActual.caducidad)){
+              this.retoActual = false;
+              this.alertaRetoExperiado();
+            }
+            
             break;
           }
         }
@@ -109,8 +203,109 @@ export class RetosTab implements OnInit {
       }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////UTILIDADES  
+    
     redondea(num:any){
       Math.round(num * 100) / 100
+    }
+
+    
+    
+    alertaInscripcion(item:any){
+      const alertFin = this.alertCtrl.create({
+        title: '¿Estás seguro?',
+        subTitle: 'Perderás todo progreso acumulado. Empezarás el siguiente reto desde cero.',
+        buttons: [
+          
+          {
+            text: 'Cancelar',
+            role: 'cancela'
+          },
+          
+          {
+          text: 'Comfirmar inscripción',
+          role: 'Inscribir',
+          handler: () => {
+            this.inscribirUsuario(item);
+          }
+        }]
+      });
+      alertFin.present();
+    }
+
+
+    alertaServidor(){
+      const alertError = this.alertCtrl.create({
+          title: 'Error de servidor',
+          subTitle: 'Lo sentimos, en este momento nuestros servidores estan teniendo problemas',
+          buttons: ['De acuerdo']
+        });
+        alertError.present();
+    }
+
+    alertaRetoExperiado(){
+      const alertError = this.alertCtrl.create({
+        title: 'Reto expirado',
+        subTitle: 'Sentimos decirte que tu reto actual ha expirado. Te invitamos a inscribirte a un reto nuevo.',
+        buttons: ['De acuerdo']
+      });
+      alertError.present();
+    }
+
+    expirado(caduca: string): boolean{
+      let caducidad = new Date(caduca);
+      let hoy = new Date();
+      if(hoy < caducidad){
+        return false;
+      }
+      return true;
+    }
+
+    muestraCodigo(){
+      const alertError = this.alertCtrl.create({
+        title: '¡Felicidades!',
+        subTitle: 'GUARDA y utiliza este código para canjear tu premio en la tienda de tu respectivo patrocinador: <br/>' + this.perfil.codigoFinalizado,
+        buttons: ['Perfecto']
+      });
+      alertError.present();
+    }
+  
+    
+    botonInscribir(item:any){
+      if(!this.retoActual){
+        this.inscribirUsuario(item)
+      }else{
+        this.alertaInscripcion(item);
+      }
     }
 
 }

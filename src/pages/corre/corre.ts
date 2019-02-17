@@ -269,7 +269,7 @@ export class CorreTab implements OnInit {
   alertaFinalizado(){
     const alertFin = this.alertCtrl.create({
         title: '¡Felicidades!',
-        subTitle: 'Has terminado exitosamente el reto. Ahora te invitamos a continuar a la sección de Retos para poder utilizar tu código. ',
+        subTitle: 'Has terminado exitosamente el reto. Ahora te invitamos a continuar a la sección de Retos para poder utilizar tu código. Guardalo antes de que expire!',
         buttons: [{
           text: 'De acuerdo',
           role: 'De acuerdo',

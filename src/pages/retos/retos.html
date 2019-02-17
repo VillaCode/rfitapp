@@ -3,30 +3,56 @@
     <ion-toolbar no-padding no-margin>
         <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin style="margin-bottom: 4px;"> 
             <ion-title style="padding:7px; padding-bottom: 2px;">Reto actual: </ion-title>
-            <hr style="background-color: rgba(0, 0, 0, 0.3);"> 
-            <ion-grid style="padding: 2px; margin-top: 5px;">
+            <hr style="background-color: rgba(0, 0, 0, 0.349);"> 
+            <ion-grid no-padding style="margin-top: 5px;">
                 <ion-row>
                     <ion-col>
-                        <div style="padding-left: 5vw;">
+                        <div style="padding-left: 6vw;padding-top: 1vh;padding-bottom: 1vh;">
                             <img src={{retoActual.imagen}}>
                         </div>
-                        <div style="margin-left: 4vw;">
-                            <ion-card-title style="font-size: 18px;padding: 4px 0;">
-                                {{retoActual.nombre}}
-                            </ion-card-title> 
-                            <p style="font-size: 14px; line-height: 1;">
-                                {{retoActual.descripcion}}
-                            </p>
-                        </div>
                     </ion-col>
-                    <ion-col no-padding style="padding-left:5px;" >
-                        <div style="text-align: center; margin-top: 10vh;">
-                            HOLA
+                    <ion-col no-padding no-margin>
+                        
+                        <div style="text-align: center; margin-top: 5%; position: absolute; margin-left: 12%;">
+                            <round-progress
+                            [current]="distanciaActual"
+                            [max]="distanciaTotalReto"
+                            [color]="'#7c16b8'"
+                            [background]="'#fffb00b7'"
+                            [radius]="60"
+                            [stroke]="10"
+                            [semicircle]="false"
+                            [rounded]="true"
+                            [clockwise]="true"
+                            [responsive]="false"
+                            [duration]="800"
+                            [animation]="'easeInOutQuart'"
+                            [animationDelay]="0"></round-progress>
+                            <div *ngIf="(!completo)" style="text-align: center;margin-top: -62%;position: absolute;margin-left: 16%;width: 69%;color: #222;">
+                                {{distanciaActual}}/{{distanciaTotalReto}} km
+                            </div>
+                            <div *ngIf="(completo)" style="text-align: center;margin-top: -65%;position: absolute;margin-left: 18.5%;width: 46%;">
+                                <button ion-button small (click)="muestraCodigo()"> Premio </button>
+                            </div>  
+                        </div>
+                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 86%;position: absolute;margin-left: 45%;font-size: 69%;">
+                            Expira: {{retoActual.caducidad}}
                         </div>
                     </ion-col>
                 </ion-row>
-            </ion-grid>   
+            </ion-grid>
+            <div style="margin-left: 6vw; width: 58%">
+                <ion-card-title style="font-size: 18px;padding: 2px 0;">
+                    {{retoActual.nombre}}
+                </ion-card-title> 
+                <p style="font-size: 14px;line-height: 1.2;">
+                    {{retoActual.descripcion}}
+                </p>
+            </div>   
         </ion-card>
+
+        <ion-title *ngIf="(!retoActual)" style="text-align: center">¡Inscríbete a un reto!</ion-title>
+
     </ion-toolbar>
 
 
@@ -34,7 +60,8 @@
     <ion-list-header no-padding no-margin>
         <ion-title>Retos disponibles:</ion-title>
     </ion-list-header>
-    <div *ngFor="let reto of retos">
+    <ion-spinner style="margin-left: 50%;" *ngIf="(!retosActivos)"></ion-spinner>
+    <div *ngFor="let reto of retosActivos">
         <ion-card *ngIf="(retoActual != reto)">  
                 <ion-grid style="padding: 2px;">
                     <ion-row>
@@ -51,8 +78,8 @@
                             <ion-row no-padding>
                                 <ion-col no-padding text-center>
                                 <button ion-button clear small icon-start>
-                                    <ion-icon name='time'></ion-icon>
-                                    {{reto.tiempo}} horas
+                                    <ion-icon name='flag'></ion-icon>
+                                    {{reto.distancia}} Km
                                 </button>
                                 </ion-col>
                         
@@ -70,7 +97,7 @@
                 <ion-grid no-padding>
                     <ion-row no-padding>
                             <ion-col text-center>
-                                    <button style="padding:1px;" ion-button block (click)="inscribirUsuario(reto)">
+                                    <button style="padding:1px;" ion-button block (click)="botonInscribir(reto)">
                                         Inscribirse
                                     </button>
                             </ion-col>
