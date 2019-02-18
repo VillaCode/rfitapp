@@ -64,8 +64,13 @@
     <ion-card-header>
       ¡Escríbenos tus comentarios!
     </ion-card-header>
+
     <textarea name="feedback" id="feedback" [(ngModel)]="comentario"></textarea>
-    <button ion-button full (click)="enviarFeedback()">Enviar</button>
+    <button ion-button full (click)="enviarFeedback()"> {{botonInfo}} 
+        <ion-spinner style="margin-left: 5px;" color = "white"  *ngIf="(feedStatus == 'cargando')"></ion-spinner>
+        <ion-icon style="margin-left: 5px;" *ngIf="(feedStatus == 'correcto')" name="checkmark-circle"></ion-icon>
+        <ion-icon style="margin-left: 5px;"  *ngIf="(feedStatus == 'error')" name="close-circle"></ion-icon>
+    </button>
   </ion-card>
   
  

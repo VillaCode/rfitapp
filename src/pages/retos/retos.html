@@ -28,14 +28,14 @@
                             [duration]="800"
                             [animation]="'easeInOutQuart'"
                             [animationDelay]="0"></round-progress>
-                            <div *ngIf="(!completo)" style="text-align: center;margin-top: -62%;position: absolute;margin-left: 16%;width: 69%;color: rgba(34, 34, 34, 0.753);font-size: large;font-weight: 500;">
+                            <div *ngIf="(!completo)" style="text-align: center;margin-top: -58.5%;position: absolute;margin-left: 16%;width: 69%;color: rgba(34, 34, 34, 0.753);font-size: large;font-weight: 500;">
                                 {{distanciaActual}}/{{distanciaTotalReto}} km
                             </div>
                             <div *ngIf="(completo)" style="text-align: center;margin-top: -65%;position: absolute;margin-left: 18.5%;width: 46%;">
                                 <button ion-button small (click)="muestraCodigo()"> Premio </button>
                             </div>  
                         </div>
-                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 86%;position: absolute;margin-left: 45%;font-size: 69%;">
+                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 81%;position: absolute;margin-left: 50%;font-size: 69%;">
                             Expira: {{retoActual.caducidad}}
                         </div>
                     </ion-col>
@@ -60,7 +60,10 @@
     <ion-list-header no-padding no-margin>
         <ion-title>Retos disponibles:</ion-title>
     </ion-list-header>
-    <ion-spinner style="margin-left: 50%;" *ngIf="(!retosActivos)"></ion-spinner>
+    <ion-spinner style="margin-left: 50%;" *ngIf="(!retosCargados)"></ion-spinner>
+    <p *ngIf="(noHayRetos)" style="font-size: 14px;line-height: 1.2;">
+        Lo sentimos, por el momento no hay retos disponibles.
+    </p>
     <div *ngFor="let reto of retosActivos">
         <ion-card *ngIf="(retoActual != reto)">  
                 <ion-grid style="padding: 2px;">

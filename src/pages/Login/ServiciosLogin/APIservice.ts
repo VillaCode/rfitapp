@@ -70,7 +70,6 @@ export class ApiService {
         .then(async (data) => {return console.log(data.data);})
                 .catch((err: any) => { 
                     console.log("--------------------------------" + err)
-                    return "errorservidor"
                 });
     }
 

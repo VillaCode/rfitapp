@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ViewController, } from 'ionic-angular';
+import { NavController, ViewController, LoadingController, } from 'ionic-angular';
 import { configuracionTab } from '../Settings/configuracion'
 import { loginModal } from '../Login/login';
 import { AuthService } from '../Login/ServiciosLogin/auth.service';
@@ -18,8 +18,10 @@ export class PerfilTab implements OnInit{
   public perfil:Usuario;
   public comentario:string;
   public distanciaKM: any;
+  public feedStatus: string;
+  public botonInfo: string = 'Enviar  ';
 
-  constructor(public navCtrl: NavController, public authservice:AuthService, public servicioUsuario:servicioUsuario, public apiService:ApiService) {
+  constructor(public navCtrl: NavController, public authservice:AuthService, public servicioUsuario:servicioUsuario, public apiService:ApiService, public loadingCtrl: LoadingController) {
     
   }
 
@@ -38,10 +40,10 @@ export class PerfilTab implements OnInit{
     let res = await this.apiService.obtenerDistanciaMax(this.perfil._id);
     console.log(res);
     if(res.split('?')[0] == "exito"){
-      if(res.split('?')[1] == 'null'){
+      if(res.split('?')[1] == 'null' || res.split('?')[1] == '0'){
         this.distanciaKM = 0;
       }else{
-        this.distanciaKM = Math.round(parseFloat(res.split('?')[1]) * 1000) / 1000;
+        this.distanciaKM = Math.round(parseFloat(res.split('?')[1])/1000 * 10) / 10;
       }
     }else{
       this.distanciaKM = "error";
@@ -57,9 +59,20 @@ export class PerfilTab implements OnInit{
     this.authservice.logout();
   }
 
-  enviarFeedback(){
+  async enviarFeedback(){
+    
     console.log(this.comentario);
-    return this.apiService.postFeedback(this.comentario, this.perfil._id);
+    this.botonInfo = '';
+    this.feedStatus = 'cargando';
+    await this.apiService.postFeedback(this.comentario, this.perfil._id).then(() => {
+      this.feedStatus = 'correcto';
+      this.botonInfo = 'Enviar'
+      
+    }).catch((error) => {
+      console.log('error');
+      this.feedStatus = 'error';
+      this.botonInfo = 'Enviar'
+    });
   }
 
 }

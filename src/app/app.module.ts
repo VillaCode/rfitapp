@@ -24,7 +24,7 @@ import { Usuario } from '../pages/Login/ServiciosLogin/Usuario';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
-
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 @NgModule({
   declarations: [
@@ -66,6 +66,7 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
     SplashScreen,
     GoogleMaps,
     Geolocation,
+    BackgroundGeolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NativePageTransitions,
     PerfilTab,

@@ -16,7 +16,7 @@ export class Usuario {
 
     //INSTANCÍA LA VARIABLE EN CASO DE SER REQUERIDA
     public static GetNewInstance(): Usuario {
-      return new Usuario(null, null, null, null, null, null);
+      return new Usuario(null, null, null, null, null, null, null);
     }
   
 
@@ -42,7 +42,7 @@ export class Usuario {
 
 
     //REGRESA UN USUARIOIDENTIFICADO DE UN OBJETO STORAGE
-    public static ParseFromObjectStoraged(object): Usuario {
+    public static ParseFromObjectStoraged(object:any): Usuario {
       console.log(object);
       const model = Usuario.GetNewInstance();
   
@@ -53,6 +53,7 @@ export class Usuario {
         model.reto_actual = object.reto_actual;
         model.reto_actual_distancia = object.reto_actual_distancia;
         model.reto_actual_segundos = object.reto_actual_segundos;
+        model.codigoFinalizado = object.codigoFinalizado;
         console.log(model);
       }else{
         console.log("Objeto no existe");
@@ -68,6 +69,7 @@ export class Usuario {
         reto_actual_distancia: string, 
         reto_actual_segundos: string,
         usuario: string,
+        codigoFinalizado: string,
       ) 
       {
 
@@ -77,6 +79,7 @@ export class Usuario {
       this.reto_actual_distancia = reto_actual_distancia;
       this.reto_actual_segundos = reto_actual_segundos;
       this.usuario = usuario;
+      this.codigoFinalizado = codigoFinalizado;
     }
   
   }

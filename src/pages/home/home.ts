@@ -27,9 +27,10 @@ export class Home {
     private getAuthUser() {
       this.userService.getOnStorage().then(
         (user) => {
+          console.log(user);
           if (!user) {
             console.log("NO hay usuario");
-            this.navCtrl.push(loginModal)
+            this.navCtrl.push(loginModal);
           }else{
             console.log("si hay usuario");
             this.user = user;

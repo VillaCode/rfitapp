@@ -22,6 +22,8 @@ export class RetosTab implements OnInit {
   public distanciaActual: number;
   public distanciaTotalReto: number;
   public caducidad: string;
+  public retosCargados: boolean = false;
+  public noHayRetos: boolean = false;
   
   constructor(
     public navCtrl: NavController, 
@@ -51,6 +53,7 @@ export class RetosTab implements OnInit {
     }
 
     //Muestra boton si ya terminó el reto
+    console.log(this.perfil.codigoFinalizado);
     if(this.perfil.codigoFinalizado){
       this.completo = true;
     }
@@ -87,24 +90,38 @@ export class RetosTab implements OnInit {
 
     })
     .then(async (data) => {
+      
       this.retos = data.data;
       this.retosActivos = [];
       console.log(data.data);
+
+
       for(let i of data.data){
+
         i.tiempo = Math.round((i.tiempo/3600) * 100) / 100;
         i.distancia = Math.round(i.distancia/1000 * 100) / 100;
+
         if(!this.expirado(i.caducidad)){
           this.retosActivos.push(i);
-        }else{
-          console.log(i.nombre + "experiado");
+        }
+        else{
+          console.log(i.nombre + "expirado");
         }
       }
+      
+      if(this.retosActivos.length == 0){
+        this.noHayRetos = true;
+        console.log('no hay retos')
+      }
+      this.retosCargados = true;
       console.log(this.retos);
       console.log(this.retosActivos);
+      console.log(this.retosActivos.length);  
 
     } )
-    .catch(err => { 
-        console.log("--------------------------------" + err)
+    .catch(err => {   
+        console.log("--------------------------------" + err);
+        this.noHayRetos = true;
     });
     }
 
@@ -116,7 +133,7 @@ export class RetosTab implements OnInit {
 
 
 
-    
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////INSCRIBE UN USUARIO EN NUEVO RETO, ACTUALIZA SERVIDOR, STORAGE Y REINICIA APP
 
@@ -140,6 +157,7 @@ export class RetosTab implements OnInit {
          console.log("CORRECTO");
          this.perfil.reto_actual = item.id;
          this.perfil.codigoFinalizado = undefined;
+         this.perfil.reto_actual_distancia = '0';
          this.completo = false;
          await this.servicioUsuario.setOnStorage(this.perfil);
          let perfil = await this.servicioUsuario.getOnStorage();
@@ -185,8 +203,9 @@ export class RetosTab implements OnInit {
             this.retoActual = i;
             console.log(this.retoActual);
             this.retoActual.caducidad = this.retoActual.caducidad.split('T')[0];
-            this.distanciaActual = parseFloat(this.perfil.reto_actual_distancia);
+            this.distanciaActual = Math.round(parseFloat(this.perfil.reto_actual_distancia)/1000 * 100) / 100;
             this.distanciaTotalReto = parseFloat(this.retoActual.distancia);
+            
             console.log(this.retoActual.caducidad);
             console.log(this.distanciaActual);
             console.log(this.distanciaTotalReto);
@@ -207,27 +226,15 @@ export class RetosTab implements OnInit {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
+
+
+
+
+
+
+
+
     
     
     
@@ -293,7 +300,7 @@ export class RetosTab implements OnInit {
     muestraCodigo(){
       const alertError = this.alertCtrl.create({
         title: '¡Felicidades!',
-        subTitle: 'GUARDA y utiliza este código para canjear tu premio en la tienda de tu respectivo patrocinador: <br/>' + this.perfil.codigoFinalizado,
+        subTitle: 'GUARDA y utiliza este código para canjear tu premio en la tienda de tu respectivo patrocinador: <br/><br/>' + this.perfil.codigoFinalizado + ' <br/><br/>' + 'Recuerda usarlo antes de la fecha de expiración',
         buttons: ['Perfecto']
       });
       alertError.present();

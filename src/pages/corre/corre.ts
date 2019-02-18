@@ -5,18 +5,24 @@ import { Geolocation } from '@ionic-native/geolocation';
 import axios from 'axios';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
-import { Observable } from "rxjs/Rx";
-
+import { BackgroundGeolocation, BackgroundGeolocationResponse, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
+import 'rxjs/add/operator/filter';
 
 interface OnInit {
   ngOnInit(): void
 };
 declare var google;
-// let pathLocal = [], runPath;
 let  startTime, endTime;
-const options = {
+const opcionesGeolocation = {
   enableHighAccuracy: true, timeout: 30000,
 };
+let options = {
+
+  timeout: 30000,
+  maximumAge: 10000,
+  enableHighAccuracy: true
+
+}
 
 
 //NO CRASHEES PLS
@@ -30,6 +36,8 @@ export class CorreTab implements OnInit {
   map: GoogleMap;
   perfil: Usuario;
   codigo: any;
+  public latitud: any;
+  public longitud: any;
   
   
   
@@ -41,25 +49,27 @@ export class CorreTab implements OnInit {
     public servicioUsuario:servicioUsuario,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-
+    public backgroundGeolocation: BackgroundGeolocation,
     ) 
     {
       this.isTracking = false;
+      this.loadMap();
     };
 
   async ngOnInit() {
     
-    this.loadMap();
     let perfil = await this.servicioUsuario.getOnStorage();
     if(!perfil._email){  
       this.perfil = JSON.parse(perfil);
     }else{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
+    this.startBackgroundConfig();
     console.log(this.perfil);
-    
-    
+    //this.backgroundGeolocation.start();
+    //this.startBackground();
   }
+
 
 
 
@@ -80,13 +90,13 @@ export class CorreTab implements OnInit {
         'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to'
       });
       // console.log("---------------hola------------\n\n\n");
-      this.geolocation.getCurrentPosition(options).then((resp) => {
+      this.geolocation.getCurrentPosition(options).then((location) => {
         // const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
         let mapOptions: GoogleMapOptions = {
           camera: {
             target: {
-              lat: resp.coords.latitude,
-              lng: resp.coords.longitude
+              lat: location.coords.latitude,
+              lng: location.coords.longitude
             },
             zoom: 21,
           }
@@ -113,24 +123,43 @@ export class CorreTab implements OnInit {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   startTracking() {
+
+    //Verifica que este inscrito a un reto
     if(this.perfil.reto_actual){
+
+      //inicializa fecha de corrida
       startTime = new Date();
+
+      //Cambia el estado de isTracking
       this.isTracking = true;
-      this.geolocation.getCurrentPosition(options).then((resp) => {
-        //console.log(resp);
+      
+
+      //DOWAIL
+      this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
+        this.storePosition(resp);
       }).catch((error) => {
         console.log('Error getting location', error);
       });
+
+
       window.setInterval(() => {
         if (!this.isTracking) {
           return
         }
-        this.geolocation.getCurrentPosition(options).then((resp) => {
+        
+
+        //Promesa de captura de posicion, 
+        this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
+
+          //Guarda posicion
           this.storePosition(resp);
-          console.log(resp.coords.accuracy);
+          console.log(resp.accuracy);
+
         }).catch((error) => {
           console.log('Error getting location', error);
         });
+
+
       }, 5000);
     }else{
       this.alertaNoReto();
@@ -139,6 +168,8 @@ export class CorreTab implements OnInit {
 
 
 
+
+  
 
 
 
@@ -184,6 +215,8 @@ export class CorreTab implements OnInit {
         console.log(data.data);
         if(data.data.split('?')[0] == "finalizado"){
           this.perfil.codigoFinalizado = data.data.split('?')[1];
+          this.perfil.reto_actual_distancia += distanciaTotal;
+          this.perfil.reto_actual_segundos += seconds;
           await this.servicioUsuario.setOnStorage(this.perfil);
           loader.dismiss();
           return this.alertaFinalizado();
@@ -195,7 +228,7 @@ export class CorreTab implements OnInit {
           loader.dismiss();
           return this.alertaCorrio(distanciaTotal, seconds);  
         }else{
-          console.log("hola");
+          console.log("no inscrito?");
         }
       })
       .catch(err => {
@@ -217,19 +250,17 @@ export class CorreTab implements OnInit {
 
 
 
-
-
-
-
-    //Utilidades
+//Utilidades
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  storePosition(position) {
-    if (position.coords.accuracy < 35) {
+
+
+    //Guarda y pinta la posicion
+  storePosition(position:any) {
+    if (position.accuracy < 35) {
       let latlng: ILatLng;
       latlng = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lat: position.latitude,
+        lng: position.longitude
       }
       this.pathLocal.push(latlng);
       if (this.pathLocal.length > 1) {
@@ -238,19 +269,22 @@ export class CorreTab implements OnInit {
           color: '#7c16b8',
         }
         this.map.addPolyline(polylineOptions).then((polyline) => {
-          console.log("---------SE AÑADIO UN PUNTO---------");
+          //console.log("---------SE AÑADIO UN PUNTO---------");
         });
       }
-
-      // runPath.getPath().push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
     }
-    console.log(position.coords.accuracy);
+    console.log(position.accuracy);
   }
+
+
 
 
   deg2rad(deg) {
     return deg * (Math.PI / 180)
   }
+
+
+
 
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -262,10 +296,24 @@ export class CorreTab implements OnInit {
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
-    return d;
+    return d*1000;
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////ALERTAS
   alertaFinalizado(){
     const alertFin = this.alertCtrl.create({
         title: '¡Felicidades!',
@@ -285,7 +333,7 @@ export class CorreTab implements OnInit {
 
     const alertCor = this.alertCtrl.create({
         title: 'Buen trabajo.',
-        subTitle: 'Las estadísticas de tu reto han sido actualizadas. <br/> ' + "Distancia recorrida: " + Math.round(distanciaTotal * 1000) / 1000 + ' km<br/>' + "Tiempo transcurrido: " + Math.round((seconds/3600)* 100) / 100 + ' horas',
+        subTitle: 'Las estadísticas de tu reto han sido actualizadas. <br/> ' + "Distancia recorrida: " + Math.round(distanciaTotal/1000 * 100) / 100 + ' km<br/>' + "Tiempo transcurrido: " + Math.round((seconds/3600)* 100) / 100 + ' horas',
         buttons: [{
           text: 'De acuerdo',
           role: 'De acuerdo',
@@ -321,6 +369,46 @@ export class CorreTab implements OnInit {
         }]
       });
       alertError.present();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  startBackgroundConfig() {
+    const config: BackgroundGeolocationConfig = {
+      desiredAccuracy: 1,
+      stationaryRadius: 20,
+      distanceFilter: 30,
+      debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+    };
+    
+    this.backgroundGeolocation.configure(config)
+    .then((location) => {
+
+    console.log(location);
+
+    // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+    // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+    // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+    //this.backgroundGeolocation.finish(); // FOR IOS ONLY
+
+    });
   }
 
 }
