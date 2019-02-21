@@ -2,7 +2,7 @@
 
     <ion-toolbar no-padding no-margin>
         <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin style="margin-bottom: 4px;"> 
-            <ion-title style="padding:7px; padding-bottom: 2px;">Reto actual: </ion-title>
+            <ion-title style="margin-bottom: 4px;" id="retoActualTitulo"> Reto actual: </ion-title>
             <hr style="background-color: rgba(0, 0, 0, 0.349);"> 
             <ion-grid no-padding style="margin-top: 5px;">
                 <ion-row>
@@ -35,7 +35,7 @@
                                 <button ion-button small (click)="muestraCodigo()"> Premio </button>
                             </div>  
                         </div>
-                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 81%;position: absolute;margin-left: 50%;font-size: 69%;">
+                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 81%;position: absolute;margin-left: 50%;font-size: 69%; color: #7c16b8;">
                             Expira: {{retoActual.caducidad}}
                         </div>
                     </ion-col>
@@ -58,9 +58,9 @@
 
   <ion-list class="listaDeRetos">
     <ion-list-header no-padding no-margin>
-        <ion-title>Retos disponibles:</ion-title>
+        <ion-title id="#retosDisponibles" >Retos disponibles:</ion-title>
     </ion-list-header>
-    <ion-spinner style="margin-left: 50%;" *ngIf="(!retosCargados)"></ion-spinner>
+    <ion-spinner style="margin-left: 40%;" *ngIf="(!retosCargados)"></ion-spinner>
     <p *ngIf="(noHayRetos)" style="font-size: 14px;line-height: 1.2;">
         Lo sentimos, por el momento no hay retos disponibles.
     </p>
@@ -89,7 +89,7 @@
                                 <ion-col no-padding text-center>
                                 <div style="color: #7c16b8; font-weight: 600; text-transform: uppercase; text-align: center; font-family: inherit; height: 2.1em; font-size: 1.3rem; padding: 9.5% 0.9em; vertical-align: middle">
                                     <ion-icon name='person'></ion-icon>
-                                    {{reto.inscritos}} 
+                                    {{reto.inscritos}}/{{reto.cupo}}
                                 </div>
                                 </ion-col>
                             </ion-row>    

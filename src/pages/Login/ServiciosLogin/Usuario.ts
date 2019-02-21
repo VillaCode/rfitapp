@@ -10,7 +10,7 @@ export class Usuario {
     public reto_actual: string;
     public reto_actual_distancia: string;
     public reto_actual_segundos: string;
-    public codigoFinalizado: string;
+    public codigoFinalizado: any;
     public usuario: string;
   
 
@@ -32,6 +32,7 @@ export class Usuario {
         model.reto_actual = object.reto_actual;
         model.reto_actual_distancia = object.reto_actual_distancia;
         model.reto_actual_segundos = object.reto_actual_segundos;
+        model.codigoFinalizado = object.codigoFinalizado;
         console.log(model);   
       }else{
         console.log("Objeto no existe");
@@ -68,8 +69,8 @@ export class Usuario {
         reto_actual: string, 
         reto_actual_distancia: string, 
         reto_actual_segundos: string,
-        usuario: string,
         codigoFinalizado: string,
+        usuario: string,
       ) 
       {
 

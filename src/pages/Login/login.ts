@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map'
 import { AuthService } from './ServiciosLogin/auth.service';
 import { Usuario } from './ServiciosLogin/Usuario';
 import { servicioUsuario } from './ServiciosLogin/Usuario.servicioUsuario';
+import { ApiService } from './ServiciosLogin/APIservice';
 
 
 
@@ -34,36 +35,55 @@ export class loginModal {
         public loadingCtrl: LoadingController,
         public authservice:AuthService,
         public servicioUsuario:servicioUsuario,
+        public apiService: ApiService,
         ) {
             console.log('Constructor login inicializado');
         }
         
 
      async login(){
-
+        
+        //crea loader
         const loader = this.loadingCtrl.create({
             content: "Iniciando sesión...",
         });
- 
+        
+        //caso de campovacio
         if(this.email == null || this.password == null){
             return this.alertaCampoFaltante();
         }
         
+        //presenta loader
         loader.present();
 
+        //Request para ver si credenciales son correctas
         let res:any = await this.authservice.login(this.email, this.password);
         console.log(res);
         
+
+
+        ////////////////////////////////////////////////////////
+        //Casos de posible respuestas del request
+
+        //caso Exito.
         if(res.split('?')[0] == "exito"){
+        
+        //Se guarda id
         this.id = res.split('?')[1];
-        //Termina loader y avanza a la app
-        
-        
+        console.log(this.id);
+        //la id se utiliza para hacer otro request en el que se pasa el usuario como un objeto mediante la id.
         let usuarioParseado = Usuario.ParseFromObjectAxios(await this.servicioUsuario.guardaUsuario(this.id));
+
+        //se verifica si existe codigo y si es el caso se le agrega al usuario
+        let ultimoCodigo = await this.apiService.obtenerUltimoCodigo(this.id)
+        usuarioParseado.codigoFinalizado = ultimoCodigo;
+
         console.log(usuarioParseado);
-            
+
+        //se guarda usuario en storage    
         await this.servicioUsuario.createOnStorage(usuarioParseado);
 
+        //Termina loader y avanza a la app
         console.log("EXITO");
         loader.dismiss();
         return this.navCtrlL.push(TabsPage);
@@ -102,37 +122,7 @@ export class loginModal {
      
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
      redondea(num:any){
         Math.round(num * 100) / 100

@@ -14,6 +14,7 @@ export class registroPage {
     username:String;
     password:String;
     cPassword:String;
+    tallaCamisa: String;
 
     
 
@@ -39,7 +40,7 @@ export class registroPage {
             content: "Por favor espere...",
         });
         
-        if(this.email == null || this.password == null || this.cPassword == null || this.username == null){
+        if(this.email == null || this.password == null || this.cPassword == null || this.username == null || this.tallaCamisa == null){
             return this.alertaCampoVacio();
         }
 
@@ -57,6 +58,7 @@ export class registroPage {
             username_signup: this.username,
             password_signup: this.password,
             email_signup: this.email,
+            tallaCamisa: this.tallaCamisa,
         }
 
         var json = JSON.stringify(usuarioInfo);

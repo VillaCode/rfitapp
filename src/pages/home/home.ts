@@ -17,7 +17,7 @@ import { TabsPage } from '../tabs/tabs';
 
 export class Home {
     
-    private user: Usuario;
+    private user: any;
   
     constructor(private userService: servicioUsuario, public navCtrl: NavController) {
       console.log("Constructor home inicializado");      

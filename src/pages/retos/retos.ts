@@ -52,16 +52,19 @@ export class RetosTab implements OnInit {
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
 
+    //Busca y activa las variables del reto actual
+    await this.activaRetoActual();
+
     //Muestra boton si ya terminó el reto
     console.log(this.perfil.codigoFinalizado);
-    if(this.perfil.codigoFinalizado){
+    if(this.perfil.codigoFinalizado && this.perfil.codigoFinalizado.reto_id == this.retoActual.id){
+      this.distanciaActual = this.distanciaTotalReto;
       this.completo = true;
     }
 
     console.log(this.perfil);
 
-    //Busca y activa las variables del reto actual
-    this.activaRetoActual();
+    
   }
  
   
@@ -156,7 +159,6 @@ export class RetosTab implements OnInit {
         .then(async () => {
          console.log("CORRECTO");
          this.perfil.reto_actual = item.id;
-         this.perfil.codigoFinalizado = undefined;
          this.perfil.reto_actual_distancia = '0';
          this.completo = false;
          await this.servicioUsuario.setOnStorage(this.perfil);
@@ -209,8 +211,10 @@ export class RetosTab implements OnInit {
             console.log(this.retoActual.caducidad);
             console.log(this.distanciaActual);
             console.log(this.distanciaTotalReto);
+
             if(this.expirado(this.retoActual.caducidad)){
               this.retoActual = false;
+              this.perfil.codigoFinalizado = undefined;
               this.alertaRetoExperiado();
             }
             

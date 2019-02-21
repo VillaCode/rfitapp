@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, Environment, ILatLng } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -8,22 +8,7 @@ import { Usuario } from '../Login/ServiciosLogin/Usuario';
 import { BackgroundGeolocation, BackgroundGeolocationResponse, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
 import 'rxjs/add/operator/filter';
 
-interface OnInit {
-  ngOnInit(): void
-};
 declare var google;
-let  startTime, endTime;
-const opcionesGeolocation = {
-  enableHighAccuracy: true, timeout: 30000,
-};
-let options = {
-
-  timeout: 30000,
-  maximumAge: 10000,
-  enableHighAccuracy: true
-
-}
-
 
 //NO CRASHEES PLS
 @Component({
@@ -37,8 +22,29 @@ export class CorreTab implements OnInit {
   perfil: Usuario;
   codigo: any;
   public latitud: any;
-  public longitud: any;
+  public longitud: any; 
+  public startTime: any; 
+  public endTime: any;
   
+  opcionesGeolocation = {
+    
+    enableHighAccuracy: true, 
+    timeout: 30000,
+  
+  };
+
+
+  options = {
+    
+    timeout: 30000,
+    maximumAge: 10000,
+    enableHighAccuracy: true,
+    desiredAccuracy: 5,
+    distanceFilter: 30,
+  
+  }
+
+
   
   
   
@@ -90,7 +96,7 @@ export class CorreTab implements OnInit {
         'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to'
       });
       // console.log("---------------hola------------\n\n\n");
-      this.geolocation.getCurrentPosition(options).then((location) => {
+      this.geolocation.getCurrentPosition(this.opcionesGeolocation).then((location) => {
         // const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
         let mapOptions: GoogleMapOptions = {
           camera: {
@@ -128,14 +134,14 @@ export class CorreTab implements OnInit {
     if(this.perfil.reto_actual){
 
       //inicializa fecha de corrida
-      startTime = new Date();
+      this.startTime = new Date();
 
       //Cambia el estado de isTracking
       this.isTracking = true;
       
 
       //DOWAIL
-      this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
+      this.backgroundGeolocation.getCurrentLocation(this.options).then((resp) => {
         this.storePosition(resp);
       }).catch((error) => {
         console.log('Error getting location', error);
@@ -149,7 +155,7 @@ export class CorreTab implements OnInit {
         
 
         //Promesa de captura de posicion, 
-        this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
+        this.backgroundGeolocation.getCurrentLocation(this.options).then((resp) => {
 
           //Guarda posicion
           this.storePosition(resp);
@@ -183,8 +189,8 @@ export class CorreTab implements OnInit {
     loader.present();
     this.isTracking = false;
     let distanciaTotal = 0;
-    endTime = new Date();
-    let timeDiff = endTime - startTime;
+    this.endTime = new Date();
+    let timeDiff = this.endTime - this.startTime;
     timeDiff /= 1000;
     let seconds = Math.round(timeDiff);
     for (let i = 0; i < this.pathLocal.length - 1; i++) {
@@ -391,7 +397,7 @@ export class CorreTab implements OnInit {
 
   startBackgroundConfig() {
     const config: BackgroundGeolocationConfig = {
-      desiredAccuracy: 1,
+      desiredAccuracy: 5,
       stationaryRadius: 20,
       distanceFilter: 30,
       debug: false, //  enable this hear sounds for background-geolocation life-cycle.

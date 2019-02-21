@@ -80,7 +80,7 @@ export class ApiService {
 
         var json = JSON.stringify(feedback);
     
-        return axios({
+        return await axios({
             
             method: 'post',
             url: "https://thawing-mountain-76893.herokuapp.com/distanciaTotal",
@@ -94,6 +94,31 @@ export class ApiService {
                     return "errorservidor"
                 });
     }
+
+    async obtenerUltimoCodigo(id: string){
+        let feedback = {
+            usuario_id: id,
+        }
+
+        var json = JSON.stringify(feedback);
+    
+        return await axios({
+            
+            method: 'post',
+            url: "https://thawing-mountain-76893.herokuapp.com/ultimoCodigo",
+            data: {
+                json
+            }
+        })
+        .then(async (data) => {
+            
+            console.log(data.data);
+            return data.data;})
+                .catch((err: any) => { 
+                    console.log("--------------------------------" + err);
+                });
+    }
+    
     
 }
 

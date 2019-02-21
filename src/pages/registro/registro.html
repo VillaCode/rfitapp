@@ -9,20 +9,31 @@
 <ion-content padding>
 
     <ion-list>
-        <!-- <ion-item>
-            <ion-input placeholder="Nombre completo" [(ngModel)]="nombre"></ion-input>
-        </ion-item> -->
         <ion-item>
             <ion-input placeholder="Correo Electrónico" [(ngModel)]="email"></ion-input>
         </ion-item>
+
         <ion-item>
             <ion-input placeholder="Nombre completo" [(ngModel)]="username"></ion-input>
         </ion-item>
+
         <ion-item>
             <ion-input placeholder="Contraseña" type="password" [(ngModel)]="password"></ion-input>
         </ion-item>
+
         <ion-item>
             <ion-input placeholder="Confirmar contraseña" type="password" [(ngModel)]="cPassword"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Talla de playera (es reducida)</ion-label>
+            <ion-select [(ngModel)]="tallaCamisa">
+              <ion-option value="XL">XL</ion-option>
+              <ion-option value="L">L</ion-option>
+              <ion-option value="M">M</ion-option>
+              <ion-option value="X">S</ion-option>
+              <ion-option value="XS">XS</ion-option>
+            </ion-select>
         </ion-item>
         
     </ion-list>
