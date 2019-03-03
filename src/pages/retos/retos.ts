@@ -64,8 +64,7 @@ export class RetosTab implements OnInit {
 
     console.log(this.perfil);
 
-    
-  }
+  };
  
   
   
@@ -126,7 +125,7 @@ export class RetosTab implements OnInit {
         console.log("--------------------------------" + err);
         this.noHayRetos = true;
     });
-    }
+    };
 
 
 
@@ -169,14 +168,14 @@ export class RetosTab implements OnInit {
          this.retoActual = item;
          loader.dismiss();
          document.location.href = 'index.html';
-        } )
+        })
         .catch(err => {
             loader.dismiss(); 
             console.log("--------------------------------" + err)
             this.retoActual = retoError;
             this.alertaServidor();
         });
-    }
+    };
 
 
 
@@ -224,7 +223,7 @@ export class RetosTab implements OnInit {
       }else{
         console.log("error retos o perfil");
       }
-    }
+    };
 
     
     

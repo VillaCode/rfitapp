@@ -7,8 +7,30 @@ import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
 import { BackgroundGeolocation, BackgroundGeolocationResponse, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
 import 'rxjs/add/operator/filter';
+import { stringify } from '@angular/compiler/src/util';
+
 
 declare var google;
+
+const opcionesGeolocation = {
+  enableHighAccuracy: true, 
+  timeout: 30000, 
+  desiredAccuracy: 0,
+  startForeground: true,
+  stopOnTerminate: true,
+};
+let options = {
+
+  timeout: 5000,
+  maximumAge: 30000,
+  enableHighAccuracy: true,
+  desiredAccuracy: 0,
+  stationaryRadius: 1,
+  distanceFilter: 1,
+  startForeground: true,
+  stopOnTerminate: true,
+
+}
 
 //NO CRASHEES PLS
 @Component({
@@ -25,28 +47,7 @@ export class CorreTab implements OnInit {
   public longitud: any; 
   public startTime: any; 
   public endTime: any;
-  
-  opcionesGeolocation = {
-    
-    enableHighAccuracy: true, 
-    timeout: 30000,
-  
-  };
-
-
-  options = {
-    
-    timeout: 30000,
-    maximumAge: 10000,
-    enableHighAccuracy: true,
-    desiredAccuracy: 5,
-    distanceFilter: 30,
-  
-  }
-
-
-  
-  
+   
   
   constructor(
     public navCtrl: NavController, 
@@ -60,6 +61,7 @@ export class CorreTab implements OnInit {
     {
       this.isTracking = false;
       this.loadMap();
+      this.startBackgroundConfig();
     };
 
   async ngOnInit() {
@@ -70,7 +72,6 @@ export class CorreTab implements OnInit {
     }else{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
-    this.startBackgroundConfig();
     console.log(this.perfil);
     //this.backgroundGeolocation.start();
     //this.startBackground();
@@ -95,16 +96,16 @@ export class CorreTab implements OnInit {
         'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to',
         'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to'
       });
-      // console.log("---------------hola------------\n\n\n");
-      this.geolocation.getCurrentPosition(this.opcionesGeolocation).then((location) => {
-        // const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+     
+      this.geolocation.getCurrentPosition(opcionesGeolocation).then((location) => {
+       
         let mapOptions: GoogleMapOptions = {
           camera: {
             target: {
               lat: location.coords.latitude,
               lng: location.coords.longitude
             },
-            zoom: 21,
+            zoom: 20,
           }
         };
         this.map = GoogleMaps.create('map', mapOptions);
@@ -141,7 +142,7 @@ export class CorreTab implements OnInit {
       
 
       //DOWAIL
-      this.backgroundGeolocation.getCurrentLocation(this.options).then((resp) => {
+      this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
         this.storePosition(resp);
       }).catch((error) => {
         console.log('Error getting location', error);
@@ -152,14 +153,13 @@ export class CorreTab implements OnInit {
         if (!this.isTracking) {
           return
         }
-        
+        console.log(this.backgroundGeolocation.getConfig());
 
         //Promesa de captura de posicion, 
-        this.backgroundGeolocation.getCurrentLocation(this.options).then((resp) => {
+        this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
 
           //Guarda posicion
           this.storePosition(resp);
-          console.log(resp.accuracy);
 
         }).catch((error) => {
           console.log('Error getting location', error);
@@ -199,6 +199,8 @@ export class CorreTab implements OnInit {
       distanciaTotal += this.getDistanceFromLatLonInKm(this.pathLocal[i].lat, this.pathLocal[i].lng, this.pathLocal[
         i + 1].lat, this.pathLocal[i + 1].lng)
     }
+
+    this.backgroundGeolocation.finish();
     
     const Url = 'https://thawing-mountain-76893.herokuapp.com/profile/recibirDistancia';
     let informacionDeRun = {
@@ -234,6 +236,7 @@ export class CorreTab implements OnInit {
           loader.dismiss();
           return this.alertaCorrio(distanciaTotal, seconds);  
         }else{
+          loader.dismiss();
           console.log("no inscrito?");
         }
       })
@@ -262,7 +265,7 @@ export class CorreTab implements OnInit {
 
     //Guarda y pinta la posicion
   storePosition(position:any) {
-    if (position.accuracy < 35) {
+    if (position.accuracy < 40) {
       let latlng: ILatLng;
       latlng = {
         lat: position.latitude,
@@ -275,11 +278,12 @@ export class CorreTab implements OnInit {
           color: '#7c16b8',
         }
         this.map.addPolyline(polylineOptions).then((polyline) => {
-          //console.log("---------SE AÑADIO UN PUNTO---------");
+          console.log("---------SE AÑADIO UN PUNTO---------");
+          console.log(position.accuracy);
         });
       }
     }
-    console.log(position.accuracy);
+    console.log("Accuracy muy alta");
   }
 
 
@@ -396,18 +400,22 @@ export class CorreTab implements OnInit {
 
 
   startBackgroundConfig() {
+
+
     const config: BackgroundGeolocationConfig = {
-      desiredAccuracy: 5,
-      stationaryRadius: 20,
-      distanceFilter: 30,
+      
+      desiredAccuracy: 0,
+      stationaryRadius: 10,
       debug: false, //  enable this hear sounds for background-geolocation life-cycle.
-      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+      stopOnTerminate: true, // enable this to clear background location settings when the app terminates
+      startForeground: true,
     };
     
     this.backgroundGeolocation.configure(config)
     .then((location) => {
 
     console.log(location);
+    console.log('HOLA------------------------------------------------------');
 
     // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
     // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.

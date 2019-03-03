@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Platform, NavParams, ViewController, NavController, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import axios from 'axios';
 import { CachedResourceLoader } from '@angular/platform-browser-dynamic/src/resource_loader/resource_loader_cache';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
 
 @Component({
     selector: "registro",
@@ -10,11 +13,11 @@ import { CachedResourceLoader } from '@angular/platform-browser-dynamic/src/reso
 export class registroPage {
    
     // nombre:String;
-    email:String;
-    username:String;
-    password:String;
-    cPassword:String;
-    tallaCamisa: String;
+    email:string;
+    username:string;
+    password:string;
+    cPassword:string;
+    tallaCamisa: string;
 
     
 
@@ -42,10 +45,6 @@ export class registroPage {
         
         if(this.email == null || this.password == null || this.cPassword == null || this.username == null || this.tallaCamisa == null){
             return this.alertaCampoVacio();
-        }
-
-        if(!this.validateEmail(this.email)) {
-            return this.alertaEmailIncorrecto();
         }
 
         if(this.cPassword != this.password){
@@ -107,7 +106,7 @@ export class registroPage {
      alertaServidor(error:any){
         const alertError = this.alertCtrl.create({
             title: 'Error de servidor',
-            subTitle: 'Lo sentimos, en este momento nuestros servidores estan teniendo problemas y no hemos podido registrar su cuenta',
+            subTitle: 'Lo sentimos, en este momento nuestros servidores estan teniendo problemas y no hemos podido registrar su cuenta. Le sugerimos esperar o intentar con otro correo electrónico',
             buttons: ['De acuerdo']
           });
           alertError.present();
@@ -136,10 +135,6 @@ export class registroPage {
             alertError.present();
         }
 
-     validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
 }
 
      

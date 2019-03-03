@@ -7,7 +7,7 @@
             <ion-grid no-padding style="margin-top: 5px;">
                 <ion-row>
                     <ion-col>
-                        <div style="padding-left: 6vw;padding-top: 1vh;padding-bottom: 1vh;">
+                        <div style="padding-left: 6vw;padding-top: 2vh;padding-bottom: 1vh;">
                             <img src={{retoActual.imagen}}>
                         </div>
                     </ion-col>
@@ -35,7 +35,7 @@
                                 <button ion-button small (click)="muestraCodigo()"> Premio </button>
                             </div>  
                         </div>
-                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 81%;position: absolute;margin-left: 50%;font-size: 69%; color: #7c16b8;">
+                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 83%;position: absolute;margin-left: 50%;font-size: 69%; color: #7c16b8;">
                             Expira: {{retoActual.caducidad}}
                         </div>
                     </ion-col>
@@ -60,7 +60,7 @@
     <ion-list-header no-padding no-margin>
         <ion-title id="#retosDisponibles" >Retos disponibles:</ion-title>
     </ion-list-header>
-    <ion-spinner style="margin-left: 40%;" *ngIf="(!retosCargados)"></ion-spinner>
+    <ion-spinner style="margin-left: 45%;" *ngIf="(!retosCargados)"></ion-spinner>
     <p *ngIf="(noHayRetos)" style="font-size: 14px;line-height: 1.2;">
         Lo sentimos, por el momento no hay retos disponibles.
     </p>
