@@ -61,7 +61,7 @@
         <ion-title id="#retosDisponibles" >Retos disponibles:</ion-title>
     </ion-list-header>
     <ion-spinner style="margin-left: 45%;" *ngIf="(!retosCargados)"></ion-spinner>
-    <p *ngIf="(noHayRetos)" style="font-size: 14px;line-height: 1.2;">
+    <p *ngIf="(noHayRetos)" style="font-size: 14px;line-height: 1.2; padding-left: 8px;">
         Lo sentimos, por el momento no hay retos disponibles.
     </p>
     <div *ngFor="let reto of retosActivos">

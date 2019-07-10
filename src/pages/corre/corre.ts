@@ -96,7 +96,7 @@ export class CorreTab implements OnInit {
         'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to',
         'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyADpe3tsTbjXVhsnGiu2TKzxqA1XH185to'
       });
-     
+
       this.geolocation.getCurrentPosition(opcionesGeolocation).then((location) => {
        
         let mapOptions: GoogleMapOptions = {
@@ -157,7 +157,8 @@ export class CorreTab implements OnInit {
 
         //Promesa de captura de posicion, 
         this.backgroundGeolocation.getCurrentLocation(options).then((resp) => {
-
+          //console.log("*********************" + resp.latitude +" , " + resp.longitude+"**************" );
+          
           //Guarda posicion
           this.storePosition(resp);
 
@@ -264,8 +265,8 @@ export class CorreTab implements OnInit {
 
 
     //Guarda y pinta la posicion
-  storePosition(position:any) {
-    if (position.accuracy < 40) {
+  storePosition(position:BackgroundGeolocationResponse) {
+    if (position.accuracy < 180) {
       let latlng: ILatLng;
       latlng = {
         lat: position.latitude,
@@ -283,7 +284,7 @@ export class CorreTab implements OnInit {
         });
       }
     }
-    console.log("Accuracy muy alta");
+    console.log(position.accuracy);
   }
 
 
