@@ -22,9 +22,9 @@ import { servicioUsuario } from '../pages/Login/ServiciosLogin/Usuario.servicioU
 import { Home } from '../pages/home/home';
 import { Usuario } from '../pages/Login/ServiciosLogin/Usuario';
 import { IonicStorageModule } from '@ionic/storage';
-import { Geolocation } from '@ionic-native/geolocation/';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
-import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import { Geolocation } from '@ionic-native/geolocation/';
 
 @NgModule({
   declarations: [
@@ -65,8 +65,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
     StatusBar,
     SplashScreen,
     GoogleMaps,
-    Geolocation,
     BackgroundGeolocation,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NativePageTransitions,
     PerfilTab,
