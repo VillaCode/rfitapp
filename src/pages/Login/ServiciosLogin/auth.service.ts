@@ -1,7 +1,9 @@
+import { Usuario } from "./Usuario";
+import { servicioUsuario } from "./Usuario.servicioUsuario";
 import { Injectable } from "@angular/core";
 import { ApiService } from "./APIservice";
-import { servicioUsuario } from "./Usuario.servicioUsuario";
-import { Usuario } from "./Usuario";
+
+
 
 @Injectable()
 export class AuthService {

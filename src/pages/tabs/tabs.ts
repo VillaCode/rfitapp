@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CorreTab } from '../corre/corre';
 import { PerfilTab } from '../perfil/perfil';

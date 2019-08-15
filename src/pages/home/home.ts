@@ -1,7 +1,6 @@
-import { Component, Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import 'rxjs/add/operator/map'
-import { Usuario } from '../Login/ServiciosLogin/Usuario';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { loginModal } from '../Login/login';
 import { TabsPage } from '../tabs/tabs';
@@ -10,8 +9,8 @@ import { TabsPage } from '../tabs/tabs';
 
 
 @Component({
-  selector: 'page-perfil',
-  template: '',
+  selector: 'page-home',
+  templateUrl: "home.html"
 })
 
 
@@ -33,8 +32,8 @@ export class Home {
             this.navCtrl.push(loginModal);
           }else{
             console.log("si hay usuario");
+            console.log(user);
             this.user = user;
-            console.log(this.user);
             this.navCtrl.push(TabsPage);
           }
         }

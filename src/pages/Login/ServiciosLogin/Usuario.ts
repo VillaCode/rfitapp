@@ -12,11 +12,11 @@ export class Usuario {
     public reto_actual_segundos: string;
     public codigoFinalizado: any;
     public usuario: string;
-  
+    public primeraVez: boolean;
 
     //INSTANCÍA LA VARIABLE EN CASO DE SER REQUERIDA
     public static GetNewInstance(): Usuario {
-      return new Usuario(null, null, null, null, null, null, null);
+      return new Usuario(null, null, null, null, null, null, null, null);
     }
   
 
@@ -33,6 +33,8 @@ export class Usuario {
         model.reto_actual_distancia = object.reto_actual_distancia;
         model.reto_actual_segundos = object.reto_actual_segundos;
         model.codigoFinalizado = object.codigoFinalizado;
+        model.primeraVez = object.primeraVez;
+        
         console.log(model);   
       }else{
         console.log("Objeto no existe");
@@ -55,6 +57,7 @@ export class Usuario {
         model.reto_actual_distancia = object.reto_actual_distancia;
         model.reto_actual_segundos = object.reto_actual_segundos;
         model.codigoFinalizado = object.codigoFinalizado;
+        model.primeraVez = object.primeraVez;
         console.log(model);
       }else{
         console.log("Objeto no existe");
@@ -71,6 +74,7 @@ export class Usuario {
         reto_actual_segundos: string,
         codigoFinalizado: string,
         usuario: string,
+        primeraVez: boolean
       ) 
       {
 
@@ -81,6 +85,7 @@ export class Usuario {
       this.reto_actual_segundos = reto_actual_segundos;
       this.usuario = usuario;
       this.codigoFinalizado = codigoFinalizado;
+      this.primeraVez = primeraVez;
     }
   
   }

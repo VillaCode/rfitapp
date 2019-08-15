@@ -1,5 +1,7 @@
 <ion-content>
 
+    
+    
     <ion-toolbar no-padding no-margin>
         <ion-card *ngIf="(retoActual)" ng-cloak id="retoActual" no-padding no-margin style="margin-bottom: 4px;"> 
             <ion-title style="margin-bottom: 4px;" id="retoActualTitulo"> Reto actual: </ion-title>
@@ -35,7 +37,7 @@
                                 <button ion-button small (click)="muestraCodigo()"> Premio </button>
                             </div>  
                         </div>
-                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 83%;position: absolute;margin-left: 50%;font-size: 69%; color: #7c16b8;">
+                        <div *ngIf="(retoActual.caducidad)" ng-cloak style="text-align: center;margin-top: 20vh;position: absolute;margin-left: 50%;font-size: 69%; color: #7c16b8;">
                             Expira: {{retoActual.caducidad}}
                         </div>
                     </ion-col>

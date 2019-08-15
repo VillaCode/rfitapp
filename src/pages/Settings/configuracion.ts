@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../Login/ServiciosLogin/Usuario';
 import { NavController, ModalController } from 'ionic-angular';
 import { infoChangeModal } from '../Settings/infoChangeModal'
 import { AuthService } from '../Login/ServiciosLogin/auth.service';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
-import { Usuario } from '../Login/ServiciosLogin/Usuario';
+
 
 @Component({
   selector: 'page-config',

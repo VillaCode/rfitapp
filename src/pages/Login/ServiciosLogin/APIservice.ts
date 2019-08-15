@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Http, RequestOptions } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { Usuario } from "./Usuario";
 import { servicioUsuario } from "./Usuario.servicioUsuario";
 import axios from 'axios';
 

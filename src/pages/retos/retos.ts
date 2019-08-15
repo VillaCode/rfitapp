@@ -1,9 +1,9 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, AlertController, LoadingController, ModalController } from 'ionic-angular';
 import axios from 'axios';
-import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
 import { Usuario } from '../Login/ServiciosLogin/Usuario';
-import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
+import { bienvenida } from '../retos/bienvenida';
 
 
 
@@ -30,6 +30,7 @@ export class RetosTab implements OnInit {
     public servicioUsuario:servicioUsuario,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
     ) 
     {
     console.log('Constructor retosTab inicializado');
@@ -39,11 +40,9 @@ export class RetosTab implements OnInit {
   //PRIMERA ACCION DE PAGINA TABS
   async ngOnInit() {
 
-    //Carga retos
-    await this.generaRetos();
-
     //Toma perfil de storage
     let perfil = await this.servicioUsuario.getOnStorage();
+    console.log(perfil);
 
     //Parse info de storage a objeto Usuario
     if(!perfil._email){  
@@ -51,6 +50,17 @@ export class RetosTab implements OnInit {
     }else{
       this.perfil = Usuario.ParseFromObjectStoraged(perfil);
     }
+
+    console.log(this.perfil)
+
+    if(this.perfil.primeraVez){
+      this.perfil.primeraVez = false;        
+      this.servicioUsuario.setOnStorage(this.perfil);
+      this.openWelcome();
+    }
+
+    //Carga retos
+    await this.generaRetos();
 
     //Busca y activa las variables del reto actual
     await this.activaRetoActual();
@@ -317,5 +327,15 @@ export class RetosTab implements OnInit {
         this.alertaInscripcion(item);
       }
     }
+
+
+
+    //////////////////////SLIDES
+
+    openWelcome(){
+      let infoModal = this.modalCtrl.create(bienvenida);
+      infoModal.present();
+    }
+  
 
 }

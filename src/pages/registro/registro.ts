@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Platform, NavParams, ViewController, NavController, ModalController, AlertController, LoadingController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, NavController, AlertController, LoadingController } from 'ionic-angular';
 import axios from 'axios';
-import { CachedResourceLoader } from '@angular/platform-browser-dynamic/src/resource_loader/resource_loader_cache';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 
 
@@ -18,7 +17,7 @@ export class registroPage {
     password:string;
     cPassword:string;
     tallaCamisa: string;
-
+    aceptatos: boolean;
     
 
     constructor(
@@ -49,6 +48,10 @@ export class registroPage {
 
         if(this.cPassword != this.password){
             return this.alertaPasswordIncorrecta();
+        }
+
+        if(!this.aceptatos){
+            return this.alertaNoAcepto();
         }
 
         loader.present();
@@ -133,6 +136,14 @@ export class registroPage {
             }]
             });
             alertError.present();
+        }
+
+    alertaNoAcepto(){
+        const alertNoAcepto = this.alertCtrl.create({
+            title: 'Debes aceptar nuestros términos y condiciones',
+            buttons: ['Continuar']
+            });
+            alertNoAcepto.present();
         }
 
 }

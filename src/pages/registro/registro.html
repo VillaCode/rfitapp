@@ -38,6 +38,21 @@
         
     </ion-list>
 
+    <ion-item text-wrap>
+        <ion-row>
+            <ion-col col-2 no-padding no-margin>
+                <ion-item no-padding no-margin no-lines>
+                <ion-checkbox [(ngModel)]="aceptatos"></ion-checkbox>
+                </ion-item>
+            </ion-col>
+            <ion-col col-10 no-padding no-margin>
+                <ion-item no-padding no-margin no-lines>
+                Acepto <a target="_blank" href="http://terminoscondiciones.runfit.com.mx/">terminos y condiciones</a>
+                </ion-item>
+            </ion-col>
+            </ion-row>
+        </ion-item>
+    
     <button ion-button full (click)="registraFuncion()">Crear cuenta</button>
 
 </ion-content>

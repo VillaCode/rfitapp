@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ViewController, LoadingController, } from 'ionic-angular';
-import { configuracionTab } from '../Settings/configuracion'
-import { loginModal } from '../Login/login';
+import { Usuario } from '../Login/ServiciosLogin/Usuario';
+import { NavController, LoadingController, } from 'ionic-angular';
+import { configuracionTab } from '../Settings/configuracion';
 import { AuthService } from '../Login/ServiciosLogin/auth.service';
 import { servicioUsuario } from '../Login/ServiciosLogin/Usuario.servicioUsuario';
-import { Usuario } from '../Login/ServiciosLogin/Usuario';
 import { ApiService } from '../Login/ServiciosLogin/APIservice';
 
 

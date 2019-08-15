@@ -1,5 +1,4 @@
 import { Usuario } from "./Usuario";
-import { Subject } from "rxjs/Subject";
 import axios from 'axios';
 import { Injectable } from "@angular/core";
 import { Storage } from '@ionic/storage';

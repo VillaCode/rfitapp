@@ -3,12 +3,10 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { registroPage } from '../registro/registro';
 import { AlertController } from 'ionic-angular';
-
-import 'rxjs/add/operator/map'
-
-import { AuthService } from './ServiciosLogin/auth.service';
 import { Usuario } from './ServiciosLogin/Usuario';
+import 'rxjs/add/operator/map'
 import { servicioUsuario } from './ServiciosLogin/Usuario.servicioUsuario';
+import { AuthService } from './ServiciosLogin/auth.service';
 import { ApiService } from './ServiciosLogin/APIservice';
 
 
@@ -78,6 +76,7 @@ export class loginModal {
         let ultimoCodigo = await this.apiService.obtenerUltimoCodigo(this.id)
         usuarioParseado.codigoFinalizado = ultimoCodigo;
 
+        usuarioParseado.primeraVez = true;
         console.log(usuarioParseado);
 
         //se guarda usuario en storage    
