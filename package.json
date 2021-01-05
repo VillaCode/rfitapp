@@ -32,7 +32,7 @@
     "@ionic/storage": "2.2.0",
     "@types/express": "^4.16.1",
     "angular-svg-round-progressbar": "^2.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
